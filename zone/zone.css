@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=Allerta+Stencil&family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+    --glitch: 5;
+    --glitch-lower: -1;
+    --glitch-upper: -2;
+    --overlay: 10;
+    --terminal-bg: 0;
+}
+
+body {
+    background: black;
+    color: oklch(0.95 0 0);
+    font-family: 'JetBrains Mono', monospace;
+    margin: 5rem;
+}
+
+h1 {
+    font-family: 'Allerta Stencil', sans-serif;
+    font-size: 4rem;
+    font-weight: 900;
+    letter-spacing: 0.2rem;
+}
+
+.content {
+    align-content: center;
+    margin: 0 auto;
+    position: absolute;
+    height: 100%;
+    padding: 0 3rem;
+}
+
+.glitch {
+    position: relative;
+    /* text-shadow: 0.1rem 0.1rem 0.1rem oklch(0.6 0.2 120 / 0.6); */
+    text-shadow: 0 0 0.25rem oklch(0.7 0.15 145 / 0.3);
+    z-index: var(--glitch);
+}
+
+.glitch::after,
+.glitch::before {
+    content: attr(data-text);
+    inset: 0;
+    position: absolute;
+}
+
+.glitch::after {
+    animation: idle-glitch 2s linear both infinite;
+    color: oklch(0.6 0 0);
+    filter: blur(2px);
+    z-index: var(--glitch-lower);
+}
+
+.glitch::before {
+    animation: idle-glitch 2s linear reverse both infinite;
+    color: oklch(0.6 0.2 0);
+    z-index: var(--glitch-upper);
+}
+
+.heavy-glitch {
+    animation: heavy-glitch 0.1s linear infinite;
+    filter: contrast(200%) brightness(150%);
+}
+
+.heavy-glitch::after {
+    animation: ghost-trail 0.2s ease-out;
+}
+
+.scanlines {
+    background-image:
+        repeating-linear-gradient(
+            oklch(0 0 0 / 0.2),
+            oklch(0 0 0 / 0.2) 1px,
+            transparent 1px,
+            transparent 2px
+        );
+    height: 100%;
+    mask-image: radial-gradient(oklch(0 0 0 / 0.4) 10%,
+            oklch(0 0 0 / 0.15) 100%);
+    position: absolute;
+    width: 100%;
+    z-index: var(--overlay);
+}
+
+.overlay {
+    border-radius: 1rem;
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(
+            circle at 0% 0%,
+            oklch(0.5 0.05 145 / 0.2) 0%,
+            transparent 3%
+        ),
+        radial-gradient(
+            circle at 100% 100%,
+            oklch(0.5 0.05 145 / 0.2) 0%,
+            transparent 3%
+        ),
+        radial-gradient(
+            circle at 100% 0%,
+            oklch(0.5 0.05 145 / 0.2) 0%,
+            transparent 3%
+        ),
+        radial-gradient(
+            circle at 0% 100%,
+            oklch(0.5 0.05 145 / 0.2) 0%,
+            transparent 3%
+        );
+}
+
+.terminal {
+    animation: crt-init 0.5s linear forwards;
+    min-height: 20rem;
+    min-width: 40rem;
+    position: relative;
+}
+
+.terminal-bg {
+    background-image:
+        url('zone.jpeg');
+    background-position: 50% 50%;
+    background-size: cover;
+    border-radius: 1rem;
+    height: 100%;
+    mask-image: radial-gradient(oklch(0 0 0 / 0.4) 10%,
+            oklch(0 0 0 / 0.15) 100%);
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    z-index: var(--terminal-bg);
+}
+
+@keyframes ghost-trail {
+    0% {
+        opacity: 0.8;
+        transform: translate(-10px, 2px) scale(1.05);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(0, 0) scale(1);
+    }
+}
+
+@keyframes heavy-glitch {
+    0% {
+        clip-path: inset(20% 0 50% 0);
+        transform: translateX(-5px);
+    }
+
+    50% {
+        clip-path: inset(60% 0 10% 0);
+        transform: translateX(5px);
+    }
+
+    100% {
+        clip-path: inset(10% 0 80% 0);
+        transform: translateX(0);
+    }
+}
+
+@keyframes crt-init {
+    0% {
+        transform: scaleX(0) scaleY(0.005);
+        filter: brightness(5);
+    }
+
+    50% {
+        transform: scaleX(1) scaleY(0.005);
+        filter: brightness(5);
+    }
+
+    100% {
+        transform: scaleX(1) scaleY(1);
+        filter: brightness(1);
+    }
+}
+
+@keyframes idle-glitch {
+    0% {
+        transform: translate(0);
+    }
+
+    90% {
+        transform: translate(-2px, 2px);
+    }
+
+    92% {
+        transform: translate(-2px, -2px);
+    }
+
+    94% {
+        transform: translate(2px, 2px);
+    }
+
+    98% {
+        transform: translate(2px, -2px);
+    }
+
+    100% {
+        transform: translate(0);
+    }
+}
