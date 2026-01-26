@@ -4,6 +4,7 @@
     --glitch: 5;
     --glitch-lower: -1;
     --glitch-upper: -2;
+    --noise: 20;
     --overlay: 10;
     --terminal-bg: 0;
 }
@@ -24,15 +25,18 @@ h1 {
 
 .content {
     align-content: center;
+    border-radius: 1rem;
+    filter: contrast(1.1) brightness(1.1);
+    height: 100%;
     margin: 0 auto;
     position: absolute;
-    height: 100%;
     padding: 0 3rem;
+    transform: perspective(1000px) rotateX(2deg) scale(1.02);
+    z-index: 4;
 }
 
 .glitch {
     position: relative;
-    /* text-shadow: 0.1rem 0.1rem 0.1rem oklch(0.6 0.2 120 / 0.6); */
     text-shadow: 0 0 0.25rem oklch(0.7 0.15 145 / 0.3);
     z-index: var(--glitch);
 }
@@ -59,7 +63,7 @@ h1 {
 
 .heavy-glitch {
     animation: heavy-glitch 0.1s linear infinite;
-    filter: contrast(200%) brightness(150%);
+    filter: contrast(200%) brightness(50%);
 }
 
 .heavy-glitch::after {
@@ -74,6 +78,7 @@ h1 {
             transparent 1px,
             transparent 2px
         );
+    border-radius: 1rem;
     height: 100%;
     mask-image: radial-gradient(oklch(0 0 0 / 0.4) 10%,
             oklch(0 0 0 / 0.15) 100%);
@@ -111,7 +116,8 @@ h1 {
 }
 
 .terminal {
-    animation: crt-init 0.5s linear forwards;
+    /* animation: crt-init 0.5s linear forwards; */
+    border-radius: 1rem;
     min-height: 20rem;
     min-width: 40rem;
     position: relative;
@@ -130,6 +136,17 @@ h1 {
     text-align: center;
     width: 100%;
     z-index: var(--terminal-bg);
+}
+
+#noise {
+    border-radius: 1rem;
+    height: 100%;
+    inset: 0;
+    mix-blend-mode: difference;
+    opacity: 0.6;
+    position: absolute;
+    width: 100%;
+    z-index: var(--noise);
 }
 
 @keyframes ghost-trail {
