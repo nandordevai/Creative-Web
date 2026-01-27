@@ -10,11 +10,10 @@ function triggerRandomGlitch() {
     setTimeout(() => {
         glitchElement.classList.remove('heavy-glitch');
         isRandomGlitchActive = false;
+        // toggleNoise(false);
     }, 180);
-    const nextInterval = Math.random() * 7000 + 3000;
-    setTimeout(triggerRandomGlitch, nextInterval);
+    // toggleNoise(true);
 }
-triggerRandomGlitch();
 
 // noise
 
@@ -54,7 +53,43 @@ function generateNoise() {
         }
     }
     ctx.putImageData(iData, 0, 0);
-    requestAnimationFrame(generateNoise);
 }
 
-requestAnimationFrame(generateNoise);
+// leds
+
+function lfo(freq = 1, amp = 1, offset = 0, unipolar = false) {
+    const t = Date.now() / 1000;
+    let wave = Math.sin(2 * Math.PI * freq * t);
+    if (unipolar) {
+        wave = (wave + 1) * 0.5;
+    }
+    return offset + (wave * amp);
+}
+
+function setRadiationLevel() {
+    let level = lfo(0.1, 0.5, 0, true);
+    const jitter = (Math.random() - 0.5) * 0.2;
+    level += jitter;
+    if (level > 0.55) triggerRandomGlitch();
+
+    const leds = Array.from(ledrow.children);
+    const count = leds.length;
+
+    for (let i = 0; i < count; i++) {
+        if (level > (i + 1) * 0.1) {
+            leds[i].style.setProperty('--level', 0.6);
+        } else if (level < (i + 2) * 0.1) {
+            leds[i].style.setProperty('--level', 0.1);
+        } else {
+            leds[i].style.setProperty('--level', level);
+        }
+    }
+}
+
+function loop() {
+    generateNoise();
+    setRadiationLevel();
+    requestAnimationFrame(loop);
+}
+
+loop();
