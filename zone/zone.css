@@ -14,7 +14,6 @@
 body {
     background: oklch(0.25 0.2 120);
     color: oklch(0.95 0 0);
-    font-family: 'JetBrains Mono', monospace;
     margin: 5rem;
 }
 
@@ -195,12 +194,18 @@ h1 {
     background-size: cover;
     border-radius: 1rem;
     height: 100%;
-    mask-image: radial-gradient(oklch(0 0 0 / 0.4) 10%,
-            oklch(0 0 0 / 0.15) 100%);
+    mask-image: radial-gradient(
+        oklch(0 0 0 / 0.4) 10%,
+        oklch(0 0 0 / 0.25) 100%
+    );
     position: absolute;
     text-align: center;
     width: 100%;
     z-index: var(--terminal-bg);
+}
+
+.text {
+    font-family: 'JetBrains Mono', monospace;
 }
 
 #ledrow {
@@ -209,12 +214,12 @@ h1 {
     gap: 0.25rem;
 }
 
-#noise {
+#noise-overlay {
     border-radius: 1rem;
     height: 100%;
     inset: 0;
-    mix-blend-mode: difference;
-    opacity: 0.6;
+    /* mix-blend-mode: screen; */
+    opacity: 0.3;
     position: absolute;
     width: 100%;
     z-index: var(--noise);
