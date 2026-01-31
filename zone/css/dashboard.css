@@ -1,11 +1,25 @@
 .dashboard {
   background: oklch(0.25 0 0);
-  box-shadow: 0 1px 3px oklch(0 0 0 / 0.8);
-  border: 1px solid oklch(0.25 0 0);
+  padding-block: 1.5rem;
+  position: relative;
+  width: 10rem;
 
-  display: flex;
-  justify-content: flex-end;
-  padding: 1rem;
+  .dashboard-content {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  #dashboard-plate {
+    background: oklch(0.25 0 0);
+    box-shadow: 1px 1px 5px 0px oklch(0 0 0 / 0.8);
+    border: 1px solid oklch(0.3 0 0);
+    height: 100%;
+    inset: 0;
+    position: absolute;
+    width: 100%;
+    z-index: 0;
+  }
 }
 
 #drone {

@@ -27,23 +27,26 @@
 </div>
 
 <div class="dashboard">
-  <div id="drone">
-    <audio id="clip" src="audio/drone.m4a" autoplay loop></audio>
-    <label class="switch">
-      monitoring
-      <input type="checkbox" id="play"></input>
-    </label>
-  </div>
-
-  <div class="leds">
-    <div id="led-row">
-      <div class="led"></div>
-      <div class="led"></div>
-      <div class="led"></div>
-      <div class="led"></div>
-      <div class="led"></div>
+  <canvas id="dashboard-plate"></canvas>
+  <div class="dashboard-content">
+    <div id="drone">
+      <audio id="clip" src="audio/drone.m4a" autoplay loop></audio>
+      <label class="switch">
+        monitoring
+        <input type="checkbox" id="play"></input>
+      </label>
     </div>
-    <div class="label">level</div>
+
+    <div class="leds">
+      <div id="led-row">
+        <div class="led"></div>
+        <div class="led"></div>
+        <div class="led"></div>
+        <div class="led"></div>
+        <div class="led"></div>
+      </div>
+      <div class="label">level</div>
+    </div>
   </div>
 </div>
 
