@@ -25,8 +25,10 @@ export class Renderer {
     this.lastTime = timestamp;
 
     this.components.forEach(comp => {
-      comp.update?.(cappedDelta);
-      comp.render?.();
+      if (comp.needsUpdate?.() ?? true) {
+        comp.update?.(cappedDelta);
+        comp.render?.();
+      }
     });
 
     requestAnimationFrame(this.loop.bind(this));

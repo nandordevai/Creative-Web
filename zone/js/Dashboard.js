@@ -14,9 +14,11 @@ export class Dashboard {
     this.rendered = false;
   }
 
-  render() {
-    if (this.rendered) return;
+  needsUpdate() {
+    return !this.rendered;
+  }
 
+  render() {
     // 1. Base Metal & Lighting
     const metalGrad = this.ctx.createLinearGradient(0, 0, this.w, this.h);
     metalGrad.addColorStop(0, '#111');
@@ -60,7 +62,6 @@ export class Dashboard {
     this.ctx.globalCompositeOperation = 'multiply';
     this.ctx.fillStyle = 'rgba(70, 70, 70, 0.2)';
     this.ctx.fillRect(0, 0, this.w, this.h);
-
     this.rendered = true;
   }
 
