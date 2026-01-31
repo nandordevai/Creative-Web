@@ -1,7 +1,7 @@
-#leds {
+.leds {
   display: flex;
-  flex-direction: row;
-  gap: 0.25rem;
+  flex-direction: column;
+  gap: 1rem;
 
   .led {
     --size: 0.75rem;
@@ -34,5 +34,30 @@
       radial-gradient(oklch(0 0 0 / 0.1),
         oklch(0 0 0 / 0.8)),
       oklch(var(--level) 0.3 10);
+  }
+
+  .label {
+    background-color: oklch(0.1 0 0);
+    background: linear-gradient(
+      to bottom,
+      oklch(0.25 0 0),
+      oklch(0.1 0 0)
+    );
+    box-shadow: 0px 0px 1px 1px oklch(0.2 0 0);
+    color: oklch(0.7 0 0);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.1rem;
+    padding: 0.25rem 0.5rem;
+    text-align: center;
+    text-shadow: 0px 0px 2px oklch(0.9 0 0);
+    text-transform: uppercase;
+    transform: rotateZ(1deg);
+  }
+
+  #led-row {
+    display: flex;
+    flex-direction: row;
+    gap: 0.25rem;
   }
 }

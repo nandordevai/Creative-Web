@@ -8,7 +8,7 @@ const state = new AnimationState();
 const glitch = new Glitch(state);
 const renderer = new Renderer();
 const noiseOverlay = new NoiseOverlay(state, 'noise-overlay');
-const leds = new Leds(state, 'leds');
+const leds = new Leds(state, 'led-row');
 
 renderer.register(noiseOverlay);
 renderer.register(glitch);
