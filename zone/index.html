@@ -4,13 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="zone.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/glitch.css">
+  <link rel="stylesheet" href="css/leds.css">
+  <link rel="stylesheet" href="css/terminal.css">
 
 </head>
 <body>
 
 <div class="terminal">
-  <div class="terminal-bg"></div>
+  <div class="bg"></div>
   <div class="content">
     <h1 class="glitch" data-text="ZONE ARTIFACTS">ZONE ARTIFACTS</h1>
     <p class="glitch text" data-text="// LOG_017 [RECOVERY_MODE]">// LOG_017 [RECOVERY_MODE]</p>
@@ -18,27 +22,26 @@
   </div>
   <canvas id="noise-overlay"></canvas>
   <div class="scanlines"></div>
-  <div class="overlay"></div>
 </div>
 
 <div class="dashboard">
-  <!-- <audio id="clip" src="drone.m4a" autoplay loop></audio>
-  <label class="audio">
-    monitoring
-    <input type="checkbox" id="play"></input>
-  </label> -->
+  <div id="drone">
+    <audio id="clip" src="audio/drone.m4a" autoplay loop></audio>
+    <label class="switch">
+      monitoring
+      <input type="checkbox" id="play"></input>
+    </label>
+  </div>
 
-  <div class="radiation-detector">
-    <div id="ledrow">
-        <div class="led"></div>
-        <div class="led"></div>
-        <div class="led"></div>
-        <div class="led"></div>
-        <div class="led"></div>
-    </div>
+  <div id="leds">
+      <div class="led"></div>
+      <div class="led"></div>
+      <div class="led"></div>
+      <div class="led"></div>
+      <div class="led"></div>
   </div>
 </div>
 
-<script type="module" src="main.js"></script>
+<script type="module" src="js/main.js"></script>
 </body>
 </html>

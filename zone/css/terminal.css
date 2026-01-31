@@ -1,0 +1,92 @@
+:root {
+  --border-radius: 5rem / 3rem;
+}
+
+.terminal {
+  /* animation: crt-init 0.5s linear forwards; */
+  background: black;
+  border-radius: var(--border-radius);
+  min-height: 20rem;
+  min-width: 40rem;
+  position: relative;
+
+  .bg {
+    background-image:
+      url('../img/zone.jpeg');
+    background-position: 50% 50%;
+    background-size: cover;
+    border-radius: var(--border-radius);
+    height: 100%;
+    mask-image: radial-gradient(oklch(0 0 0 / 0.4) 10%,
+        oklch(0 0 0 / 0.25) 100%);
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    z-index: var(--terminal-bg);
+  }
+
+  .content {
+    align-content: center;
+    border-radius: var(--border-radius);
+    filter: contrast(1.1) brightness(1.1);
+    height: 100%;
+    margin: 0 auto;
+    position: absolute;
+    padding: 0 3rem;
+    width: 100%;
+    z-index: 4;
+  }
+
+  .scanlines {
+    --offset: 3px;
+    --blur: 5px;
+    --spread: 5px;
+    background-image:
+      repeating-linear-gradient(oklch(0 0 0 / 0.2),
+        oklch(0 0 0 / 0.2) 1px,
+        transparent 1px,
+        transparent 2px);
+    border-radius: var(--border-radius);
+    box-shadow:
+      inset calc(-1 * var(--offset)) calc(-1 * var(--offset)) var(--blur) var(--spread) black,
+      inset var(--offset) var(--offset) var(--blur) var(--spread) black;
+    height: 100%;
+    mask-image: radial-gradient(oklch(0 0 0 / 0.4) 10%,
+        oklch(0 0 0 / 0.15) 100%);
+    position: absolute;
+    width: 100%;
+    z-index: var(--overlay);
+  }
+
+  .text {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+#noise-overlay {
+  border-radius: var(--border-radius);
+  height: 100%;
+  inset: 0;
+  /* mix-blend-mode: screen; */
+  opacity: 0.3;
+  position: absolute;
+  width: 100%;
+  z-index: var(--noise);
+}
+
+@keyframes crt-init {
+  0% {
+    transform: scaleX(0) scaleY(0.005);
+    filter: brightness(5);
+  }
+
+  50% {
+    transform: scaleX(1) scaleY(0.005);
+    filter: brightness(5);
+  }
+
+  100% {
+    transform: scaleX(1) scaleY(1);
+    filter: brightness(1);
+  }
+}
