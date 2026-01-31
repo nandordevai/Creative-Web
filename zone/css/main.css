@@ -16,9 +16,14 @@
 }
 
 body {
-    background: oklch(0.25 0.2 120);
+    background: oklch(0.3 0 0);
     color: oklch(0.95 0 0);
-    margin: 5rem;
+    margin: 2rem;
+}
+
+footer {
+    border: 1px solid oklch(0.4 0 0);
+    border-block-start: none;
 }
 
 h1 {
@@ -29,9 +34,39 @@ h1 {
 }
 
 header {
+    background: oklch(0.15 0.25 120);
+    border: 1px solid oklch(0.4 0 0);
+    border-block-end: none;
     display: flex;
     flex-direction: row;
-    gap: 1rem;
+    gap: 2rem;
+    padding: 3rem;
+    position: relative;
+}
+
+header::before {
+    content: '';
+    background:
+        url(../img/texture.jpg);
+    background-size: cover;
+    filter: grayscale(100%);
+    inset: 0;
+    opacity: 0.2;
+    position: absolute;
+    /* z-index: -1; */
+}
+
+main {
+    border-inline: 1px solid oklch(0.4 0 0);
+    min-height: 50vh;
+
+    /* temp */
+    padding-block-start: 5rem;
+    text-align: center;
+    font-family: monospace;
+    font-size: 1.2rem;
+    text-shadow: 1px 1px 1px oklch(0.1 0 0);
+    color: oklch(0.6 0.2 145);
 }
 
 .audio {
