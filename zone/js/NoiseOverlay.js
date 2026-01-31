@@ -1,5 +1,5 @@
 export class NoiseOverlay {
-  constructor(canvasId, state) {
+  constructor(state, canvasId) {
     this.canvas = document.getElementById(canvasId);
     this.ctx = this.canvas.getContext('2d');
     this.scanlineWidth = 10;

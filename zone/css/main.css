@@ -28,6 +28,12 @@ h1 {
     letter-spacing: 0.2rem;
 }
 
+header {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
 .audio {
     align-items: center;
     border: 2px solid oklch(0.4 0.1 145);
