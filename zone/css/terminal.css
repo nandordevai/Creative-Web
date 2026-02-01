@@ -1,5 +1,7 @@
 :root {
   --border-radius: 5rem / 3rem;
+  --terminal-bg-img: url('../img/1.jpeg');
+  --terminal-bg-opacity: 1;
 }
 
 .terminal {
@@ -12,16 +14,17 @@
   position: relative;
 
   .bg {
-    background-image:
-      url('../img/zone.jpeg');
+    background-image: var(--terminal-bg-img);
     background-position: 50% 50%;
     background-size: cover;
     border-radius: var(--border-radius);
     height: 100%;
     mask-image: radial-gradient(oklch(0 0 0 / 0.4) 10%,
         oklch(0 0 0 / 0.25) 100%);
+    opacity: var(--terminal-bg-opacity);
     position: absolute;
     text-align: center;
+    transition: opacity 0.3s;
     width: 100%;
     z-index: var(--terminal-bg);
   }

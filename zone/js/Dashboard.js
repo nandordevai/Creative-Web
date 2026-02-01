@@ -36,20 +36,20 @@ export class Dashboard {
 
     // 3. The Fixed Reflection (Lighting)
     // This simulates a light bar reflecting off the surface
-    // const lightGrad = this.ctx.createLinearGradient(0, 0, this.w, this.h);
-    // lightGrad.addColorStop(0.3, 'rgba(255, 255, 255, 0)');
-    // lightGrad.addColorStop(0.45, 'rgba(255, 255, 255, 0.15)'); // The "hot" spot
-    // lightGrad.addColorStop(0.5, 'rgba(255, 255, 255, 0.2)');   // Sharpest highlight
-    // lightGrad.addColorStop(0.55, 'rgba(255, 255, 255, 0.15)');
-    // lightGrad.addColorStop(0.7, 'rgba(255, 255, 255, 0)');
+    const lightGrad = this.ctx.createLinearGradient(0, 0, this.w, this.h);
+    lightGrad.addColorStop(0.3, 'rgba(255, 255, 255, 0)');
+    lightGrad.addColorStop(0.45, 'rgba(255, 255, 255, 0.1)'); // The "hot" spot
+    lightGrad.addColorStop(0.5, 'rgba(255, 255, 255, 0.15)');   // Sharpest highlight
+    lightGrad.addColorStop(0.55, 'rgba(255, 255, 255, 0.1)');
+    lightGrad.addColorStop(0.7, 'rgba(255, 255, 255, 0)');
 
-    // this.ctx.globalCompositeOperation = 'screen'; // Brightens the colors underneath
-    // this.ctx.fillStyle = lightGrad;
-    // this.ctx.fillRect(0, 0, this.w, this.h);
-    // this.ctx.globalCompositeOperation = 'source-over';
+    this.ctx.globalCompositeOperation = 'screen'; // Brightens the colors underneath
+    this.ctx.fillStyle = lightGrad;
+    this.ctx.fillRect(0, 0, this.w, this.h);
+    this.ctx.globalCompositeOperation = 'source-over';
 
     // 3. Stamped Label & Serial
-    this.drawStampedText("REF: 909-X", 60, this.h - 25, 22, false);
+    this.drawStampedText("REF: 909-X", 25, this.h - 60, 20, false);
 
     // 4. Hardware
     const padding = 30;

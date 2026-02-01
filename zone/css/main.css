@@ -16,7 +16,11 @@
 }
 
 body {
-    background: oklch(0.3 0 0);
+    background: linear-gradient(
+        to bottom,
+        oklch(0.2 0 0),
+        oklch(0.4 0 0)
+    );
     color: oklch(0.95 0 0);
     margin: 2rem;
 }
@@ -57,6 +61,7 @@ header::before {
 }
 
 main {
+    background: oklch(0.3 0 0);
     border-inline: 1px solid oklch(0.4 0 0);
     min-height: 50vh;
 
