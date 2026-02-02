@@ -1,64 +1,120 @@
 :root {
-  --border-radius: 5rem / 3rem;
+  --outer-border-radius: 3rem;
+  --inner-border-radius: 2rem;
   --terminal-bg-img: url('../img/1.jpeg');
-  --terminal-bg-opacity: 1;
+  --terminal-bg-opacity: 0.6;
+  --dark-grey: oklch(0.1 0 0 / 0);
+  --mid-grey: oklch(0.2 0 0);
+  --light-grey: oklch(0.3 0 0);
 }
 
 .terminal {
-  /* animation: crt-init 0.5s linear forwards; */
-  background: black;
-  border-radius: var(--border-radius);
-  box-shadow: 2px 2px 5px 3px oklch(0 0 0 / 0.5);
-  min-height: 20rem;
-  min-width: 40rem;
+  --angle: 45deg;
+  --pos: 38%;
+  --spread: 5deg;
+  aspect-ratio: 4/3;
+  background:
+    linear-gradient(
+     to bottom,
+     oklch(1 0 0 / 0.2),
+     oklch(1 0 0 / 0) 1%,
+     oklch(1 0 0 / 0)
+    ) no-repeat border-box,
+    conic-gradient(
+      at calc(100% - var(--pos)) 50%,
+      var(--dark-grey),
+      var(--dark-grey) calc(var(--angle) - var(--spread)),
+      var(--light-grey) var(--angle),
+      var(--dark-grey) calc(var(--angle) + var(--spread)),
+      var(--dark-grey) calc(90deg + var(--angle) - var(--spread)),
+      var(--light-grey) calc(90deg + var(--angle)),
+      var(--dark-grey) calc(90deg + var(--angle) + var(--spread))
+    ) padding-box,
+    conic-gradient(
+      from 180deg
+      at var(--pos) 50%,
+      var(--dark-grey),
+      var(--dark-grey) calc(var(--angle) - var(--spread)),
+      var(--light-grey) var(--angle),
+      var(--dark-grey) calc(var(--angle) + var(--spread)),
+      var(--dark-grey) calc(90deg + var(--angle) - var(--spread)),
+      var(--light-grey) calc(90deg + var(--angle)),
+      var(--dark-grey) calc(90deg + var(--angle) + var(--spread))
+    ) padding-box,
+    oklch(0.1 0 0);
+  border: 1rem solid transparent;
+  border-radius: var(--outer-border-radius);
+  box-shadow:
+    inset 1.5rem 1.5rem 2rem oklch(0 0 0 / 0.75),
+    inset -1.5rem -1.5rem 2rem oklch(1 0 0 / 0.1),
+    0 0 1rem oklch(0 0 0 / 0.5),
+    0.25rem 0.25rem 0.5rem oklch(0 0 0 / 0.5);
   position: relative;
+  width: 60vw;
+
+  &::before {
+    background-color: var(--mid-grey);
+    border-radius: var(--inner-border-radius);
+    content: '';
+    height: calc(100% - 6rem);
+    left: 3rem;
+    position: absolute;
+    top: 3rem;
+    width: calc(100% - 6rem);
+    z-index: var(--terminal-bg);
+  }
 
   .bg {
+  /* animation: crt-init 0.5s linear forwards; */
     background-image: var(--terminal-bg-img);
     background-position: 50% 50%;
     background-size: cover;
-    border-radius: var(--border-radius);
-    height: 100%;
+    border-radius: var(--inner-border-radius);
     mask-image: radial-gradient(oklch(0 0 0 / 0.4) 10%,
         oklch(0 0 0 / 0.25) 100%);
     opacity: var(--terminal-bg-opacity);
+    height: calc(100% - 6rem);
+    left: 3rem;
     position: absolute;
-    text-align: center;
+    top: 3rem;
     transition: opacity 0.3s;
-    width: 100%;
-    z-index: var(--terminal-bg);
+    width: calc(100% - 6rem);
+    z-index: calc(var(--terminal-bg) + 1);
   }
 
   .content {
     align-content: center;
-    border-radius: var(--border-radius);
+    border-radius: var(--inner-border-radius);
     filter: contrast(1.1) brightness(1.1);
-    height: 100%;
-    margin: 0 auto;
+    height: calc(100% - 6rem);
+    left: 3rem;
     position: absolute;
-    padding: 0 3rem;
-    width: 100%;
+    padding: 0 2rem;
+    top: 3rem;
+    width: calc(100% - 6rem);
     z-index: 4;
   }
 
   .scanlines {
-    --offset: 3px;
+    --offset: 2px;
     --blur: 5px;
-    --spread: 5px;
+    --spread: 1px;
     background-image:
       repeating-linear-gradient(oklch(0 0 0 / 0.2),
-        oklch(0 0 0 / 0.2) 1px,
-        transparent 1px,
-        transparent 2px);
-    border-radius: var(--border-radius);
+        oklch(0 0 0 / 0.2) 2px,
+        transparent 2px,
+        transparent 4px);
+    border-radius: var(--inner-border-radius);
     box-shadow:
       inset calc(-1 * var(--offset)) calc(-1 * var(--offset)) var(--blur) var(--spread) black,
       inset var(--offset) var(--offset) var(--blur) var(--spread) black;
-    height: 100%;
+    height: calc(100% - 6rem);
     mask-image: radial-gradient(oklch(0 0 0 / 0.4) 10%,
         oklch(0 0 0 / 0.15) 100%);
+    left: 3rem;
     position: absolute;
-    width: 100%;
+    top: 3rem;
+    width: calc(100% - 6rem);
     z-index: var(--overlay);
   }
 
@@ -68,13 +124,14 @@
 }
 
 #noise-overlay {
-  border-radius: var(--border-radius);
-  height: 100%;
-  inset: 0;
+  border-radius: var(--inner-border-radius);
+  height: calc(100% - 6rem);
+  left: 3rem;
+  top: 3rem;
   /* mix-blend-mode: screen; */
   opacity: 0.3;
   position: absolute;
-  width: 100%;
+  width: calc(100% - 6rem);
   z-index: var(--noise);
 }
 

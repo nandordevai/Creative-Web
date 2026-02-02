@@ -32,9 +32,11 @@ footer {
 
 h1 {
     font-family: 'Allerta Stencil', sans-serif;
-    font-size: 4rem;
+    font-size: 3rem;
     font-weight: 900;
     letter-spacing: 0.2rem;
+    margin: 0;
+    margin-block-end: 2rem;
 }
 
 header {
