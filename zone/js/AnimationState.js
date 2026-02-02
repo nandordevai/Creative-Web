@@ -1,6 +1,10 @@
 export class AnimationState {
   constructor() {
-    this.values = {};
+    this.values = {
+      terminalStream: 0,
+      isGlitching: false,
+      glitchLevel: 0,
+    };
     this.listeners = [];
   }
 

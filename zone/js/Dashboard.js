@@ -49,7 +49,7 @@ export class Dashboard {
     this.ctx.globalCompositeOperation = 'source-over';
 
     // 3. Stamped Label & Serial
-    this.drawStampedText("REF: 909-X", 25, this.h - 60, 20, false);
+    this.drawStampedText("REF: 909-X", 90, this.h - 25, 20, false);
 
     // 4. Hardware
     const padding = 30;

@@ -9,13 +9,13 @@
   <link rel="stylesheet" href="css/glitch.css">
   <link rel="stylesheet" href="css/leds.css">
   <link rel="stylesheet" href="css/terminal.css">
-
+  <link rel="stylesheet" href="css/button.css">
 </head>
 <body>
 
 <header>
 
-<div class="terminal">
+<div id="terminal" class="terminal">
   <div class="bg"></div>
   <div class="content">
     <h1 class="glitch" data-text="ZONE ARTIFACTS">ZONE ARTIFACTS</h1>
@@ -29,13 +29,6 @@
 <div class="dashboard">
   <canvas id="dashboard-plate"></canvas>
   <div class="dashboard-content">
-    <div id="drone">
-      <audio id="clip" src="audio/drone.m4a" autoplay loop></audio>
-      <label class="switch">
-        monitoring
-        <input type="checkbox" id="play"></input>
-      </label>
-    </div>
 
     <div class="leds">
       <div id="led-row">
@@ -45,22 +38,41 @@
         <div class="led"></div>
         <div class="led"></div>
       </div>
-      <div class="label">r. level</div>
+      <div class="label">
+        <span class="row">radiation</span>
+        <span class="row">level</span>
+      </div>
     </div>
 
-    <div id="switcher">
-      <label class="switch-button">
-        <span class="switch-label">cam #1</span>
-        <input class="switch-light" type="radio" checked name="switch" value="1">
-      </label>
-      <label class="switch-button">
-        <span class="switch-label">cam #2</span>
-        <input class="switch-light" type="radio" name="switch" value="2">
-      </label>
-      <label class="switch-button">
-        <span class="switch-label">cam #3</span>
-        <input class="switch-light" type="radio" name="switch" value="3">
-      </label>
+    <div id="switcher" class="buttons">
+
+      <div class="button">
+        <label class="label">camera 1
+          <input type="radio" name="camera" value="1" checked>
+        </label>
+      </div>
+
+      <div class="button">
+        <label class="label">camera 2
+          <input type="radio" name="camera" value="2">
+        </label>
+      </div>
+
+      <div class="button">
+        <label class="label">camera 3
+          <input type="radio" name="camera" value="3">
+        </label>
+      </div>
+
+    </div>
+
+    <div id="audio" class="buttons">
+      <audio id="clip" src="audio/drone.m4a" autoplay loop></audio>
+      <div class="button">
+        <label class="label">signal feed
+          <input type="checkbox" name="audio">
+        </label>
+      </div>
     </div>
 
   </div>

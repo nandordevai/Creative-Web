@@ -1,7 +1,7 @@
 export class Glitch {
   constructor(state) {
     this.state = state;
-    this.state.update('glitchLvl', 0);
+    this.state.update('glitchLevel', 0);
     this.glitchElements = document.querySelectorAll('.glitch');
   }
 
@@ -9,8 +9,8 @@ export class Glitch {
     let level = this.lfo(0.1, 0.9, 0, true);
     const jitter = (Math.random() - 0.5) * 0.2;
     level += jitter;
-    this.state.update('glitchLvl', level);
-    if (this.state.values.glitchLvl > 0.9) {
+    this.state.update('glitchLevel', level);
+    if (this.state.values.glitchLevel > 0.9) {
       this.triggerRandomGlitch();
     }
   }

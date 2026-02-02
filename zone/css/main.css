@@ -1,13 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Allerta+Stencil&family=JetBrains+Mono:wght@400;700&display=swap');
 
 :root {
-    --glitch: 5;
-    --glitch-lower: -1;
-    --glitch-upper: -2;
-    --noise: 20;
-    --overlay: 10;
-    --terminal-bg: 0;
-
     --green: oklch(0.4 0.1 145);
 }
 

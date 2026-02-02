@@ -1,4 +1,4 @@
-:root {
+.terminal {
   --outer-border-radius: 3rem;
   --inner-border-radius: 2rem;
   --terminal-bg-img: url('../img/1.jpeg');
@@ -6,12 +6,10 @@
   --dark-grey: oklch(0.1 0 0 / 0);
   --mid-grey: oklch(0.2 0 0);
   --light-grey: oklch(0.3 0 0);
-}
-
-.terminal {
   --angle: 45deg;
   --pos: 38%;
   --spread: 5deg;
+
   aspect-ratio: 4/3;
   background:
     linear-gradient(
@@ -121,18 +119,18 @@
   .text {
     font-family: 'JetBrains Mono', monospace;
   }
-}
 
-#noise-overlay {
-  border-radius: var(--inner-border-radius);
-  height: calc(100% - 6rem);
-  left: 3rem;
-  top: 3rem;
-  /* mix-blend-mode: screen; */
-  opacity: 0.3;
-  position: absolute;
-  width: calc(100% - 6rem);
-  z-index: var(--noise);
+  #noise-overlay {
+    border-radius: var(--inner-border-radius);
+    height: calc(100% - 6rem);
+    left: 3rem;
+    top: 3rem;
+    /* mix-blend-mode: screen; */
+    opacity: 0.3;
+    position: absolute;
+    width: calc(100% - 6rem);
+    z-index: var(--noise);
+  }
 }
 
 @keyframes crt-init {

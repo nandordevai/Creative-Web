@@ -6,7 +6,7 @@ export class Leds {
   }
 
   update() {
-    const level = this.state.values.glitchLvl;
+    const level = this.state.values.glitchLevel;
 
     for (let i = 0; i < this.leds.length; i++) {
       if (level > i * 0.2) {
