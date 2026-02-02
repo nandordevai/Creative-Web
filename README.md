@@ -14,3 +14,17 @@ Visit [my website](https://nandordevai.net/contact) to get in touch.
 
 - Languages: HTML, CSS, JavaScript
 - Graphics & Animation: Canvas API
+
+## The experiments
+
+**[Analog-style buttons](/experiments/buttons.html)**
+
+I’ve been experimenting with more tactile web UI. This first piece is inspired by old analog equipment (because the web could use more “clicky” buttons).
+
+The goal was to see how much realism I could pull out of the browser using 100% CSS. No images, no canvas, and no external assets, just code.
+
+The Breakdown:
+- OKLCH Color: Used for consistent luminance so the "glow" feels like real light.
+- Mechanical Physics: A `cubic-bezier` transition gives the toggle a weighted, physical snap.
+- Specular Highlights: Tiny `radial-gradients` simulate an overhead light source hitting the edges.
+- Modern Logic: Using `:has(:checked)` to manage state without heavy JavaScript.

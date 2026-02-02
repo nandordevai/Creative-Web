@@ -102,21 +102,25 @@ main {
   user-select: none;
   -webkit-user-select: none;
   text-transform: uppercase;
-  transition: all 0.2s;
+  transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   width: 15rem;
 
-  &:active,
   &:has(:checked) {
     transform: scale(0.98);
   }
 
+  &:active {
+    transform: scale(0.97);
+  }
+
+  &:active,
   &:has(:checked) {
     --red-dark: oklch(0.25 0.1 0);
     --red-light: oklch(0.5 0.5 0);
 
     box-shadow:
-      0 0 0.15rem 0.15rem var(--red-mid),
-      inset 0 0 0.5rem 0.5rem oklch(from var(--red-dark) l 0.05 h / 0.25);
+    0 0 0.15rem 0.15rem var(--red-mid),
+    inset 0 0 0.5rem 0.5rem oklch(from var(--red-dark) l 0.05 h / 0.25);
     color: var(--text-light);
     text-shadow: 0 0 3px var(--text-mid);
   }
