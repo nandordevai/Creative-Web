@@ -1,4 +1,4 @@
-export class Dashboard {
+export class Plate {
   constructor(id) {
     const canvas = document.getElementById(id);
     const ratio = devicePixelRatio ?? 1;
