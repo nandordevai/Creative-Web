@@ -20,7 +20,6 @@ export class Audio {
   onChange(e) {
     if (e.target.checked) {
       if (!this.initialized) this.initialize();
-      this.masterGain.gain.value = 1;
     } else {
       this.masterGain.gain.value = 0;
     }
@@ -29,7 +28,7 @@ export class Audio {
   async initialize() {
     this.audioCtx = new AudioContext();
     this.masterGain = this.audioCtx.createGain();
-    this.masterGain.gain.value = 0.05;
+    this.masterGain.gain.value = 0.5;
     this.masterGain.connect(this.audioCtx.destination);
 
     const noiseFilter = new Filter(this.audioCtx);
@@ -78,7 +77,7 @@ export class Audio {
   }
 
   click(state) {
-    this.clicker.play(state);
+    this.clicker?.play(state);
   }
 
   tick() {

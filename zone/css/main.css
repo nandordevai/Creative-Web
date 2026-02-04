@@ -7,17 +7,21 @@
     --gap: 1rem;
     --margin: 0;
     --padding: 1rem;
+    --width: 100%;
 
     @media (min-width: 600px) {
         --dir: row;
         --gap: 2rem;
         --margin: 2rem;
         --padding: 3rem;
+        --width: fit-content;
     }
 }
 
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -27,7 +31,6 @@ body {
     display: flex;
     justify-content: center;
     min-height: 100vh;
-    margin: var(--margin);
     place-content: center;
 }
 
@@ -58,6 +61,7 @@ main {
     gap: var(--gap);
     padding: var(--padding);
     position: relative;
+    width: var(--width);
 }
 
 .audio {

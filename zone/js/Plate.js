@@ -1,3 +1,5 @@
+import { observe } from './resizer.js'
+
 export class Plate {
   constructor(id) {
     this.canvas = document.getElementById(id);
@@ -13,23 +15,26 @@ export class Plate {
     const ch = parent.clientHeight;
     this.setSize(cw, ch);
 
-    this.resizeObserver = new ResizeObserver((entries) => {
-      for (let entry of entries) {
-        const { width, height } = entry.contentRect;
-        if (
-          this.canvas.width !== Math.round(width * this.dpr) ||
-          this.canvas.height !== Math.round(height * this.dpr)
-        ) {
-          this.newWidth = width;
-          this.newHeight = height;
-          this.needsUpdate = true;
-        }
-      }
+    observe(this.canvas, (entry) => {
+      this.handleResize(entry.contentRect);
     });
-    this.resizeObserver.observe(this.canvas);
+  }
+
+  handleResize(rect) {
+    const { width, height } = rect;
+    if (
+      this.canvas.width !== Math.round(width * this.dpr) ||
+      this.canvas.height !== Math.round(height * this.dpr)
+    ) {
+      this.newWidth = width;
+      this.newHeight = height;
+      this.needsUpdate = true;
+    }
   }
 
   setSize(w, h) {
+    if (!this.newWidth && !this.newHeight) return;
+
     const newBufferWidth = Math.round(w * this.dpr);
     const newBufferHeight = Math.round(h * this.dpr);
 
@@ -43,6 +48,8 @@ export class Plate {
       this.ctx.resetTransform();
       this.ctx.scale(this.dpr, this.dpr);
     }
+    this.newWidth = null;
+    this.newHeight = null;
   }
 
   get w() {
@@ -54,9 +61,7 @@ export class Plate {
   }
 
   render() {
-    if (this.newWidth && this.newHeight) {
-      this.setSize(this.newWidth, this.newHeight)
-    }
+    this.setSize()
 
     // base metal
     const metalGrad = this.ctx.createLinearGradient(0, 0, this.w, this.h);
