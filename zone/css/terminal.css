@@ -10,6 +10,21 @@
   --pos: 38%;
   --spread: 5deg;
 
+  --terminal-bg: 1;
+  --overlay: 10;
+  --content: 5;
+  --noise: 3;
+
+  --bezel-width: 1rem;
+  --content-padding: 1rem;
+  --width: auto;
+
+  @media (min-width: 600px) {
+    --bezel-width: 3rem;
+    --content-padding: 2rem;
+    --width: 60vw;
+  }
+
   aspect-ratio: 4 / 3;
   background:
     linear-gradient(
@@ -48,17 +63,17 @@
     0 0 1rem oklch(0 0 0 / 0.5),
     0.25rem 0.25rem 0.5rem oklch(0 0 0 / 0.5);
   position: relative;
-  width: 60vw;
+  width: var(--width);
 
   &::before {
     background-color: var(--mid-grey);
     border-radius: var(--inner-border-radius);
     content: '';
-    height: calc(100% - 6rem);
-    left: 3rem;
+    height: calc(100% - var(--bezel-width) * 2);
+    left: var(--bezel-width);
     position: absolute;
-    top: 3rem;
-    width: calc(100% - 6rem);
+    top: var(--bezel-width);
+    width: calc(100% - var(--bezel-width) * 2);
     z-index: var(--terminal-bg);
   }
 
@@ -71,12 +86,12 @@
     mask-image: radial-gradient(oklch(0 0 0 / 0.4) 10%,
         oklch(0 0 0 / 0.25) 100%);
     opacity: var(--terminal-bg-opacity);
-    height: calc(100% - 6rem);
-    left: 3rem;
+    height: calc(100% - var(--bezel-width) * 2);
+    left: var(--bezel-width);
     position: absolute;
-    top: 3rem;
+    top: var(--bezel-width);
     transition: opacity 0.3s;
-    width: calc(100% - 6rem);
+    width: calc(100% - var(--bezel-width) * 2);
     z-index: calc(var(--terminal-bg) + 1);
   }
 
@@ -84,13 +99,13 @@
     align-content: center;
     border-radius: var(--inner-border-radius);
     filter: contrast(1.1) brightness(1.1);
-    height: calc(100% - 6rem);
-    left: 3rem;
+    height: calc(100% - var(--bezel-width)* 2);
+    left: var(--bezel-width);
     position: absolute;
-    padding: 0 2rem;
-    top: 3rem;
-    width: calc(100% - 6rem);
-    z-index: 4;
+    padding: 0 var(--content-padding);
+    top: var(--bezel-width);
+    width: calc(100% - var(--bezel-width)* 2);
+    z-index: var(--content);
   }
 
   .scanlines {
@@ -106,29 +121,33 @@
     box-shadow:
       inset calc(-1 * var(--offset)) calc(-1 * var(--offset)) var(--blur) var(--spread) black,
       inset var(--offset) var(--offset) var(--blur) var(--spread) black;
-    height: calc(100% - 6rem);
-    mask-image: radial-gradient(oklch(0 0 0 / 0.4) 10%,
-        oklch(0 0 0 / 0.15) 100%);
-    left: 3rem;
+    height: calc(100% - var(--bezel-width) * 2);
+    mask-image:
+      radial-gradient(
+        oklch(0 0 0 / 0.5) 10%,
+        oklch(0 0 0 / 0.2) 100%
+      );
+    left: var(--bezel-width);
     position: absolute;
-    top: 3rem;
-    width: calc(100% - 6rem);
+    top: var(--bezel-width);
+    width: calc(100% - var(--bezel-width) * 2);
     z-index: var(--overlay);
   }
 
   .text {
     font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(0.75rem, 1vw, 1rem);
   }
 
   #noise-overlay {
     border-radius: var(--inner-border-radius);
-    height: calc(100% - 6rem);
-    left: 3rem;
-    top: 3rem;
+    height: calc(100% - var(--bezel-width) * 2);
+    left: var(--bezel-width);
     /* mix-blend-mode: screen; */
     opacity: 0.3;
     position: absolute;
-    width: calc(100% - 6rem);
+    top: var(--bezel-width);
+    width: calc(100% - var(--bezel-width) * 2);
     z-index: var(--noise);
   }
 }
