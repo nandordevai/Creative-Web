@@ -1,25 +1,63 @@
 export class Plate {
   constructor(id) {
-    const canvas = document.getElementById(id);
-    const ratio = devicePixelRatio ?? 1;
-    this.ctx = canvas.getContext('2d');
-    const cw = canvas.parentNode.clientWidth;
-    const ch = canvas.parentNode.clientHeight;
-    canvas.style.width = `${cw}px`;
-    canvas.style.height = `${ch}px`;
-    canvas.width = cw * ratio;
-    canvas.height = ch * ratio;
-    this.w = canvas.width;
-    this.h = canvas.height;
-    this.rendered = false;
-    this.screwSize = 14;
+    this.canvas = document.getElementById(id);
+    this.ctx = this.canvas.getContext('2d');
+    this.newWidth = null;
+    this.newHeight = null;
+    this.needsUpdate = true;
+    this.screwSize = 7;
+    this.dpr = devicePixelRatio ?? 1;
+
+    const parent = this.canvas.parentNode;
+    const cw = parent.clientWidth;
+    const ch = parent.clientHeight;
+    this.setSize(cw, ch);
+
+    this.resizeObserver = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        const { width, height } = entry.contentRect;
+        if (
+          this.canvas.width !== Math.round(width * this.dpr) ||
+          this.canvas.height !== Math.round(height * this.dpr)
+        ) {
+          this.newWidth = width;
+          this.newHeight = height;
+          this.needsUpdate = true;
+        }
+      }
+    });
+    this.resizeObserver.observe(this.canvas);
   }
 
-  needsUpdate() {
-    return !this.rendered;
+  setSize(w, h) {
+    const newBufferWidth = Math.round(w * this.dpr);
+    const newBufferHeight = Math.round(h * this.dpr);
+
+    if (
+      this.canvas.width !== newBufferWidth
+      || this.canvas.height !== newBufferHeight
+    ) {
+      this.canvas.width = newBufferWidth;
+      this.canvas.height = newBufferHeight;
+
+      this.ctx.resetTransform();
+      this.ctx.scale(this.dpr, this.dpr);
+    }
+  }
+
+  get w() {
+    return this.canvas.width / this.dpr;
+  }
+
+  get h() {
+    return this.canvas.height / this.dpr;
   }
 
   render() {
+    if (this.newWidth && this.newHeight) {
+      this.setSize(this.newWidth, this.newHeight)
+    }
+
     // base metal
     const metalGrad = this.ctx.createLinearGradient(0, 0, this.w, this.h);
     metalGrad.addColorStop(0, '#000');
@@ -48,10 +86,16 @@ export class Plate {
     this.ctx.globalCompositeOperation = 'source-over';
 
     // text label
-    this.drawStampedText('REF: 909-X', 90, this.h - 25, 20, false);
+    this.drawStampedText({
+      text: 'REF: 909-X',
+      x: this.w / 2,
+      y: this.h - 10,
+      size: 10,
+      align: 'center',
+    });
 
     // screws
-    const padding = 30;
+    const padding = 11;
     this.drawScrew(padding, padding);
     this.drawScrew(this.w - padding, padding);
     this.drawScrew(padding, this.h - padding);
@@ -61,7 +105,7 @@ export class Plate {
     this.ctx.globalCompositeOperation = 'multiply';
     this.ctx.fillStyle = 'rgba(70, 70, 70, 0.2)';
     this.ctx.fillRect(0, 0, this.w, this.h);
-    this.rendered = true;
+    this.needsUpdate = false;
   }
 
   drawChippedPaint(color) {
@@ -77,12 +121,12 @@ export class Plate {
     for (let i = 0; i < 40; i++) {
       const x = Math.random() * this.w;
       const y = Math.random() * this.h;
-      const size = Math.random() * 40 + 10;
+      const size = Math.random() * 20 + 5;
 
       this.ctx.beginPath();
       // jagged edges
       this.ctx.moveTo(x, y);
-      for (let j = 0; j < 8; j++) {
+      for (let j = 0; j < 4; j++) {
         this.ctx.lineTo(x + Math.random() * size, y + Math.random() * size);
       }
       this.ctx.closePath();
@@ -90,7 +134,7 @@ export class Plate {
     }
 
     // edge wear
-    this.ctx.lineWidth = 5;
+    this.ctx.lineWidth = 2.5;
     this.ctx.strokeRect(0, 0, this.w, this.h);
 
     this.ctx.restore();
@@ -100,7 +144,7 @@ export class Plate {
     for (let i = 0; i < patchCount; i++) {
       const x = Math.random() * this.w;
       const y = Math.random() * this.h;
-      const radius = Math.random() * 100 + 100;
+      const radius = Math.random() * 50 + 50;
       const color = `rgba(0, 0, 0, ${Math.random() * 0.2})`;
 
       const g = this.ctx.createRadialGradient(x, y, 0, x, y, radius);
@@ -118,7 +162,7 @@ export class Plate {
 
   drawPitting(count) {
     for (let i = 0; i < count; i++) {
-      this.ctx.fillStyle = `rgba(60, 60, 60, ${Math.random() * 1})`;
+      this.ctx.fillStyle = `rgba(60, 60, 60, ${Math.random() * 0.25})`;
       this.ctx.beginPath();
       this.ctx.arc(Math.random() * this.w, Math.random() * this.h, Math.random() * 3, 0, Math.PI * 2);
       this.ctx.fill();
@@ -130,7 +174,7 @@ export class Plate {
       this.ctx.beginPath();
       const sx = Math.random() * this.w;
       const sy = Math.random() * this.h;
-      const len = Math.random() * 5 + 2;
+      const len = Math.random() * 3 + 1;
       const angle = (Math.random() - 0.5) * 2;
 
       this.ctx.moveTo(sx, sy);
@@ -138,19 +182,21 @@ export class Plate {
 
       const depth = Math.random();
       if (depth > 0.8) {
-        this.ctx.strokeStyle = 'rgba(200, 200, 200, 0.2)';
+        this.ctx.strokeStyle = 'rgba(200, 200, 200, 0.15)';
         this.ctx.lineWidth = 0.8;
       } else {
-        this.ctx.strokeStyle = 'rgba(120, 120, 120, 0.15)';
+        this.ctx.strokeStyle = 'rgba(120, 120, 120, 0.10)';
         this.ctx.lineWidth = 0.5;
       }
       this.ctx.stroke();
     }
   }
 
-  drawStampedText(text, x, y, size) {
+  drawStampedText({ text, x, y, size, align = 'center' }) {
+    this.ctx.textAlign = align;
     this.ctx.font = `bold ${size}px 'Courier New', monospace`;
-    let curX = x;
+    const textWidth = this.ctx.measureText(text).width;
+    let curX = align === 'center' ? x - textWidth / 2 : x;
     text.split('').forEach(char => {
       this.ctx.save();
       this.ctx.translate(curX, y + (Math.random() - 0.25));
@@ -178,11 +224,11 @@ export class Plate {
     this.ctx.arc(0, 0, this.screwSize, 0, Math.PI * 2);
     this.ctx.fill();
     this.ctx.strokeStyle = 'rgba(0, 0, 0, 0.6)';
-    this.ctx.lineWidth = 4;
+    this.ctx.lineWidth = 2;
 
     this.ctx.beginPath();
-    this.ctx.moveTo(-this.screwSize + 6, 0);
-    this.ctx.lineTo(this.screwSize - 6, 0);
+    this.ctx.moveTo(-this.screwSize + 3, 0);
+    this.ctx.lineTo(this.screwSize - 3, 0);
     this.ctx.stroke();
     this.ctx.restore();
   }

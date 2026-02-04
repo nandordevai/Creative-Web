@@ -1,47 +1,70 @@
 .dashboard {
-  --width: auto;
-  --padding: 1rem 5rem;
+  --align: center;
+  --areas:
+    "leds switcher"
+    "audio switcher";
+  --gap: 1rem;
+  --content-width: 16rem;
+  --width: fit-content;
 
   @media (min-width: 600px) {
+    --align: flex-start;
+    --areas:
+      "leds"
+      "switcher"
+      "audio";
+    --gap: 2rem;
+    --content-width: auto;
     --width: 10rem;
-    --padding: 1rem;
   }
 
-  padding-block: 1.5rem;
+  align-items: var(--align);
+  margin: 0 auto;
+  padding: 1.5rem;
   position: relative;
   width: var(--width);
+}
 
-  .dashboard-content {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    justify-content: center;
-    padding: var(--padding);
-  }
+.dashboard-content {
+  display: grid;
+  gap: var(--gap);
+  grid-template-areas: var(--areas);
+  grid-template-columns: repeat(2, 1fr);
+  margin: 0 auto;
+  width: var(--content-width);
+}
 
-  #dashboard-plate {
-    background: oklch(0.25 0 0);
-    box-shadow: 1px 1px 5px 0px oklch(0 0 0 / 0.8);
-    border: 1px solid oklch(0.3 0 0);
-    height: 100%;
-    inset: 0;
-    position: absolute;
-    width: 100%;
-    z-index: 0;
-  }
+.leds {
+  grid-area: leds;
+}
 
-  #switcher {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    z-index: 1;
-  }
+#audio {
+  grid-area: audio;
+}
 
-  .buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    z-index: 0;
-  }
+#dashboard-plate {
+  background: oklch(0.25 0 0);
+  box-shadow: 1px 1px 5px 0px oklch(0 0 0 / 0.8);
+  border: 1px solid oklch(0.3 0 0);
+  height: 100%;
+  inset: 0;
+  position: absolute;
+  width: 100%;
+  z-index: 0;
+}
 
+#switcher {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  grid-area: switcher;
+  justify-content: space-between;
+  z-index: 1;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  z-index: 0;
 }

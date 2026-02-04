@@ -25,7 +25,7 @@ export class Renderer {
     this.lastTime = timestamp;
 
     this.components.forEach(comp => {
-      if (comp.needsUpdate?.() ?? true) {
+      if (comp.needsUpdate ?? true) {
         comp.update?.(cappedDelta);
         comp.render?.();
       }

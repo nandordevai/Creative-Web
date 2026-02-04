@@ -15,11 +15,13 @@
   --content: 5;
   --noise: 3;
 
+  --bezel-border: 0.5rem;
   --bezel-width: 1rem;
   --content-padding: 1rem;
   --width: auto;
 
   @media (min-width: 600px) {
+    --bezel-border: 1rem;
     --bezel-width: 3rem;
     --content-padding: 2rem;
     --width: 60vw;
@@ -55,12 +57,12 @@
       var(--dark-grey) calc(90deg + var(--angle) + var(--spread))
     ) padding-box,
     oklch(0.1 0 0);
-  border: 1rem solid transparent;
+  border: var(--bezel-border) solid transparent;
   border-radius: var(--outer-border-radius);
   box-shadow:
     inset 1.5rem 1.5rem 2rem oklch(0 0 0 / 0.75),
     inset -1.5rem -1.5rem 2rem oklch(1 0 0 / 0.1),
-    0 0 1rem oklch(0 0 0 / 0.5),
+    0 0 var(--bezel-border) oklch(0 0 0 / 0.5),
     0.25rem 0.25rem 0.5rem oklch(0 0 0 / 0.5);
   position: relative;
   width: var(--width);
