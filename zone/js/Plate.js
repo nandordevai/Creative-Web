@@ -4,16 +4,14 @@ export class Plate {
   constructor(id) {
     this.canvas = document.getElementById(id);
     this.ctx = this.canvas.getContext('2d');
-    this.newWidth = null;
-    this.newHeight = null;
     this.needsUpdate = true;
     this.screwSize = 7;
     this.dpr = devicePixelRatio ?? 1;
 
     const parent = this.canvas.parentNode;
-    const cw = parent.clientWidth;
-    const ch = parent.clientHeight;
-    this.setSize(cw, ch);
+    this.newWidth = Math.round(parent.clientWidth * this.dpr);
+    this.newHeight = Math.round(parent.clientHeight * this.dpr);
+    this.setSize();
 
     observe(this.canvas, (entry) => {
       this.handleResize(entry.contentRect);
@@ -22,32 +20,27 @@ export class Plate {
 
   handleResize(rect) {
     const { width, height } = rect;
+    const newWidth = Math.round(width * this.dpr);
+    const newHeight = Math.round(height * this.dpr);
     if (
-      this.canvas.width !== Math.round(width * this.dpr) ||
-      this.canvas.height !== Math.round(height * this.dpr)
+      this.canvas.width !== newWidth ||
+      this.canvas.height !== newHeight
     ) {
-      this.newWidth = width;
-      this.newHeight = height;
+      this.newWidth = newWidth;
+      this.newHeight = newHeight;
       this.needsUpdate = true;
     }
   }
 
-  setSize(w, h) {
+  setSize() {
     if (!this.newWidth && !this.newHeight) return;
 
-    const newBufferWidth = Math.round(w * this.dpr);
-    const newBufferHeight = Math.round(h * this.dpr);
+    this.canvas.width = this.newWidth;
+    this.canvas.height = this.newHeight;
 
-    if (
-      this.canvas.width !== newBufferWidth
-      || this.canvas.height !== newBufferHeight
-    ) {
-      this.canvas.width = newBufferWidth;
-      this.canvas.height = newBufferHeight;
+    this.ctx.resetTransform();
+    this.ctx.scale(this.dpr, this.dpr);
 
-      this.ctx.resetTransform();
-      this.ctx.scale(this.dpr, this.dpr);
-    }
     this.newWidth = null;
     this.newHeight = null;
   }
