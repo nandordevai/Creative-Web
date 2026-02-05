@@ -14,7 +14,7 @@ export class Audio {
   onStateChange(state) {
     if (!this.glitchNoise) return;
 
-    this.glitchNoise.level = state.isGlitching ? 0.5 : 0;
+    this.glitchNoise.level = state.isGlitching ? 0.35 : 0;
   }
 
   async onChange(e) {
@@ -87,7 +87,9 @@ export class Audio {
     distortion.setAmount(100)
     distortion.connect(distFilter);
 
-    this.radio = new Radio(this.audioCtx);
+    const radioSamples = Array.from({ length: 3}, (_, i) => `./audio/radio${i + 1}.wav`)
+      .concat(Array.from({ length: 8 }, (_, i) => `./audio/fx${i + 1}.wav`));
+    this.radio = new Radio(this.audioCtx, radioSamples);
     this.radio.gain = 1;
     await this.radio.play();
     this.radio.connect(distortion);
