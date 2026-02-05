@@ -1,4 +1,4 @@
-import { Clicker, Drift, DroneOsc, Filter, NoiseOsc, Reverb } from './modules/index.js';
+import { Clicker, Distortion, Drift, DroneOsc, Filter, NoiseOsc, Radio, Reverb } from './modules/index.js';
 
 export class Audio {
   constructor(state, id) {
@@ -17,19 +17,22 @@ export class Audio {
     this.glitchNoise.level = state.isGlitching ? 0.5 : 0;
   }
 
-  onChange(e) {
-    if (e.target.checked) {
-      if (!this.initialized) this.initialize();
-    } else {
-      this.masterGain.gain.value = 0;
-    }
+  async onChange(e) {
+    if (!this.initialized) await this.initialize();
+
+    this.soundChannel.gain.value = e.target.checked ? 0.5 : 0;
   }
 
   async initialize() {
     this.audioCtx = new AudioContext();
-    this.masterGain = this.audioCtx.createGain();
-    this.masterGain.gain.value = 0.5;
-    this.masterGain.connect(this.audioCtx.destination);
+
+    this.effectChannel = this.audioCtx.createGain();
+    this.effectChannel.gain.value = 0.5;
+    this.effectChannel.connect(this.audioCtx.destination);
+
+    this.soundChannel = this.audioCtx.createGain();
+    this.soundChannel.gain.value = 0;
+    this.soundChannel.connect(this.audioCtx.destination);
 
     const noiseFilter = new Filter(this.audioCtx);
     noiseFilter.frequency = 400;
@@ -42,7 +45,7 @@ export class Audio {
 
     const noise = new NoiseOsc(this.audioCtx);
     noise.connect(noiseFilter);
-    noiseFilter.connect(this.masterGain);
+    noiseFilter.connect(this.soundChannel);
 
     const drone = new DroneOsc(this.audioCtx);
 
@@ -60,23 +63,43 @@ export class Audio {
     await reverb.loadIR('./audio/r1_ortf.wav');
     reverb.mix = 0.7;
     droneFilter.connect(reverb);
-    reverb.connect(this.masterGain);
+    reverb.connect(this.soundChannel);
 
     this.glitchNoise = new NoiseOsc(this.audioCtx);
     this.glitchNoise.level = 0;
-    this.glitchNoise.connect(this.masterGain);
+    this.glitchNoise.connect(this.soundChannel);
 
     this.clicker = new Clicker(this.audioCtx);
     await this.clicker.load([
       './audio/click-on.wav',
       './audio/click-off.wav',
     ]);
-    this.clicker.connect(this.masterGain);
+    this.clicker.connect(this.effectChannel);
+    this.runningModules.push(this.clicker);
+
+    const distFilter = new Filter(this.audioCtx);
+    distFilter.frequency = 600;
+    distFilter.Q = 5;
+    distFilter.connect(this.soundChannel);
+    distFilter.gain = 0.5;
+
+    const distortion = new Distortion(this.audioCtx);
+    distortion.setAmount(100)
+    distortion.connect(distFilter);
+
+    this.radio = new Radio(this.audioCtx);
+    this.radio.gain = 1;
+    await this.radio.play();
+    this.radio.connect(distortion);
+    this.runningModules.push(this.radio);
 
     this.tick();
+    this.initialized = true;
   }
 
   click(state) {
+    if (!this.initialized) return;
+
     this.clicker?.play(state);
   }
 

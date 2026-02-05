@@ -3,6 +3,8 @@ import { AudioModule } from './AudioModule.js';
 export class Clicker extends AudioModule {
   constructor(ctx) {
     super(ctx, 'Clicker');
+    this.playing = false;
+    this.queuedSounds = [];
   }
 
   async load([on, off]) {
@@ -15,11 +17,25 @@ export class Clicker extends AudioModule {
   }
 
   play(state) {
-    if (!this.onBuffer || !this.offBuffer) return;
+    this.queuedSounds.push(state);
+  }
+
+  update() {
+    if (
+      this.playing ||
+      this.queuedSounds.length === 0 ||
+      (!this.onBuffer || !this.offBuffer)
+    ) return;
+
+    const sample = this.queuedSounds.shift();
 
     const source = this.ctx.createBufferSource();
-    source.buffer = state === 'on' ? this.onBuffer : this.offBuffer;
+    source.buffer = sample === 'on' ? this.onBuffer : this.offBuffer;
     source.connect(this.output);
     source.start(this.ctx.currentTime);
+    this.playing = true;
+    source.onended = () => {
+      this.playing = false;
+    }
   }
 }
