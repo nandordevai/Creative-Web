@@ -17,6 +17,8 @@ const leds = new Leds(state, 'led-row');
 const plate = new Plate('dashboard-plate');
 const audio = new Audio(state, 'audio');
 const switcher = new Switcher(state, 'switcher');
+const terminal = new Terminal(state, 'terminal');
+terminal.runBootSequence();
 document.querySelectorAll('.button').forEach((el) => {
   const button = new Button(el);
   button.addEventListener('buttonpress', () => {
@@ -25,8 +27,12 @@ document.querySelectorAll('.button').forEach((el) => {
   button.addEventListener('buttonrelease', () => {
     audio.click('off');
   });
+  if (el.classList.contains('clrscr')) {
+    button.addEventListener('buttonpress', () => {
+      terminal.clrscr();
+    });
+  }
 })
-const terminal = new Terminal(state, 'terminal');
 
 renderer.register(noiseOverlay);
 renderer.register(glitch);
