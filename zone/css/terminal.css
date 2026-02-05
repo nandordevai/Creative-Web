@@ -16,13 +16,12 @@
   --noise: 3;
 
   --bezel-border: 0.5rem;
-  --bezel-width: 1rem;
+  --bezel-width: clamp(1rem, 4vw, 3rem);
   --content-padding: 1rem;
   --width: auto;
 
   @media (min-width: 600px) {
     --bezel-border: 1rem;
-    --bezel-width: 3rem;
     --content-padding: 2rem;
     --width: 60vw;
   }
@@ -64,6 +63,7 @@
     inset -1.5rem -1.5rem 2rem oklch(1 0 0 / 0.1),
     0 0 var(--bezel-border) oklch(0 0 0 / 0.5),
     0.25rem 0.25rem 0.5rem oklch(0 0 0 / 0.5);
+  height: fit-content;
   position: relative;
   width: var(--width);
 
@@ -138,7 +138,7 @@
 
   .text {
     font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(0.75rem, 1vw, 1rem);
+    font-size: clamp(0.5rem, 2vw, 1rem);
   }
 
   #noise-overlay {
