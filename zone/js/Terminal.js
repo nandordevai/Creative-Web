@@ -14,14 +14,14 @@ const BOOTLOG = [
 ];
 const LOGS = [
   [
-    'CHANNEL 01: THE EXTERIOR (OUTSIDE VIEW)',
+    'CAMERA 01: THE EXTERIOR',
     'STATUS: OBSERVATION DECK.',
     'THE SKY HAS BEEN THIS SHADE OF GREY FOR DECADES.',
     'THE DIALS STOPPED MOVING IN ’86, BUT THE SHADOWS BEHIND THE GLASS STILL SEEM TO SHIFT.',
     'NATURE IS RECLAIMING THE CONCRETE, BUT NOTHING HERE FEELS GREEN.',
   ],
   [
-    'CHANNEL 02: THE TURBINE HALL',
+    'CAMERA 02: THE TURBINE HALL',
     'STATUS: SECTOR 4-B.',
     'THESE IRON GIANTS WERE BUILT TO POWER A CITY; NOW THEY BARELY HOLD UP THE CEILING.',
     'THERE IS A VIBRATION IN THE AIR THAT THE SENSORS CAN’T CATEGORIZE.',
@@ -29,7 +29,7 @@ const LOGS = [
     'THE FOG DOESN’T SHOW UP ON THE SCREEN.',
   ],
   [
-    'CHANNEL 03: THE PROCESS HALL',
+    'CAMERA 03: THE PROCESS HALL',
     'STATUS: SECONDARY FLOW.',
     'A LABYRINTH OF RUSTED IRON AND DEAD PRESSURE GAUGES.',
     'IF YOU LISTEN CLOSELY TO THE DRONE, YOU CAN HEAR THE GHOSTS OF THE STEAM STILL TRYING TO FIND A WAY OUT.',
@@ -45,6 +45,8 @@ export class Terminal {
     this.state = state;
     this.stream = 0;
     this.state.subscribe((newState) => this.onStateChange(newState));
+    this.cursor = document.createElement('span');
+    this.cursor.className = 'cursor';
   }
 
   runBootSequence() {
@@ -58,9 +60,6 @@ export class Terminal {
       this.textEl.lastChild?.remove();
     }
 
-    const cursor = document.createElement('span');
-    cursor.className = 'cursor';
-
     let first = continuation;
     for (const line of lines) {
       const lineEl = document.createElement('div');
@@ -70,11 +69,11 @@ export class Terminal {
         first = false;
       }
       this.textEl.appendChild(lineEl);
-      lineEl.appendChild(cursor);
+      lineEl.appendChild(this.cursor);
       lineEl.scrollIntoView(false);
-      cursor.before(PROMPT);
+      this.cursor.before(PROMPT);
       for (let i = 0; i < line.length; i++) {
-        cursor.before(line[i]);
+        this.cursor.before(line[i]);
         await delay(0); //40
       }
       // await delay(Math.random() * 500 + 300);
@@ -84,14 +83,12 @@ export class Terminal {
   }
 
   addCursorLine() {
-    const cursor = document.createElement('span');
-    cursor.className = 'cursor';
     const line = document.createElement('div');
     line.classList.add('glitch', 'text');
     this.textEl.appendChild(line);
-    line.appendChild(cursor);
+    line.appendChild(this.cursor);
     line.scrollIntoView(false);
-    cursor.before(PROMPT);
+    this.cursor.before(PROMPT);
   }
 
   clrscr() {
@@ -116,6 +113,11 @@ export class Terminal {
         1
       );
     }, 200);
+    if (state.terminalStream === '3') {
+      this.el.querySelector('.bg').style.setProperty(
+        'animation', 'background-zoom 120s linear 1'
+      );
+    }
     this.stream = state.terminalStream;
     this.displayLog(LOGS[state.terminalStream - 1]);
   }

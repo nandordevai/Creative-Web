@@ -1,4 +1,8 @@
 .terminal {
+  align-self: center;
+  grid-area: terminal;
+  justify-self: end;
+
   --outer-border-radius: 3rem;
   --inner-border-radius: 2rem;
   --terminal-bg-img: url('../img/1.jpeg');
@@ -185,7 +189,6 @@
 }
 
 @keyframes blink {
-
   0%,
   100% {
     opacity: 1;
@@ -193,5 +196,15 @@
 
   50% {
     opacity: 0;
+  }
+}
+
+@keyframes background-zoom {
+  0% {
+    background-size: 100%;
+  }
+
+  100% {
+    background-size: 200%;
   }
 }
