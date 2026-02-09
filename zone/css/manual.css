@@ -100,7 +100,7 @@
     }
 
     &.swapping {
-      animation: swapping-left var(--animation-time);
+      animation: swapping-left var(--animation-time) ease-in-out;
     }
   }
 
@@ -129,7 +129,7 @@
     }
 
     &.swapping {
-      animation: swapping-right var(--animation-time);
+      animation: swapping-right var(--animation-time) ease-in-out;
     }
   }
 
