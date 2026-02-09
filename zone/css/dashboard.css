@@ -1,5 +1,4 @@
 .dashboard {
-  /* aspect-ratio: 7 / 4; */
   grid-area: dashboard;
 
   --align: center;

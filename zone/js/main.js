@@ -40,5 +40,6 @@ renderer.register(noiseOverlay);
 renderer.register(glitch);
 renderer.register(leds);
 renderer.register(plate);
+renderer.register(terminal);
 
 renderer.start();

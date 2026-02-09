@@ -47,6 +47,9 @@ export class Terminal {
     this.state.subscribe((newState) => this.onStateChange(newState));
     this.cursor = document.createElement('span');
     this.cursor.className = 'cursor';
+    this.queue = [];
+    this.isWriting = false;
+    this.charDelay = 20;
   }
 
   runBootSequence() {
@@ -54,6 +57,7 @@ export class Terminal {
   }
 
   async displayLog(lines, continuation = true) {
+    this.isWriting = true;
     const delay = (ms) => new Promise(res => setTimeout(res, ms));
 
     if (continuation) {
@@ -74,12 +78,12 @@ export class Terminal {
       this.cursor.before(PROMPT);
       for (let i = 0; i < line.length; i++) {
         this.cursor.before(line[i]);
-        await delay(0); //40
+        await delay(this.charDelay);
       }
-      // await delay(Math.random() * 500 + 300);
+      await delay(Math.random() * 300 + 100);
     }
-    // FIXME: double cursor
     this.addCursorLine();
+    this.isWriting = false;
   }
 
   addCursorLine() {
@@ -119,6 +123,16 @@ export class Terminal {
       );
     }
     this.stream = state.terminalStream;
-    this.displayLog(LOGS[state.terminalStream - 1]);
+    this.addQueue(LOGS[state.terminalStream - 1]);
+  }
+
+  addQueue(log) {
+    this.queue.push(log);
+  }
+
+  update() {
+    if (this.queue.length > 0 && !this.isWriting) {
+      this.displayLog(this.queue.shift());
+    }
   }
 }
