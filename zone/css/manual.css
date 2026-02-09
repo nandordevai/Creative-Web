@@ -1,3 +1,9 @@
+@property --tx {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
 #manual {
   display: grid;
   grid-area: manual;
@@ -9,8 +15,9 @@
 
   --left: 0;
   --top: 0;
-  --ty: translateY(0);
+  --ty: 0;
 
+  --animation-time: 0.5s;
   --paper-color: oklch(0.8 0 0);
 
   * {
@@ -58,16 +65,16 @@
     height: 48rem;
     padding: 4rem;
     position: absolute;
-    transform: var(--tx) var(--ty) var(--tr);
+    transform: translateX(var(--tx)) translateY(var(--ty)) rotateZ(var(--tr));
     transition: all 0.3s cubic-bezier(.67, .31, .15, .96);
     width: 37rem;
   }
 
   .page-1 {
-    --tx: translateX(-60%);
-    --ty-hover: translateY(-3%);
-    --tr: rotateZ(-1deg);
-    --tr-hover: rotateZ(-1.5deg);
+    --tx: -60%;
+    --ty-hover: -3%;
+    --tr: -1deg;
+    --tr-hover: -1.5deg;
     background:
       url(../img/stain-1.png) no-repeat bottom left,
       url(../img/stain-2.png) no-repeat 170% -25%,
@@ -76,7 +83,7 @@
     z-index: 2;
 
     &:hover:not(.open) {
-      transform: var(--tx) var(--ty-hover) var(--tr-hover);
+      transform: translateX(var(--tx)) translateY(var(--ty-hover)) rotateZ(var(--tr-hover));
     }
 
     &::before {
@@ -91,11 +98,15 @@
       width: 100%;
       z-index: -1;
     }
+
+    &.swapping {
+      animation: swapping-left var(--animation-time);
+    }
   }
 
   .page-2 {
-    --tx: translateX(-40%);
-    --tr: rotateZ(2deg);
+    --tx: -40%;
+    --tr: 2deg;
 
     background:
       url(../img/stain-3.png) no-repeat 180% 180%,
@@ -116,9 +127,41 @@
       width: 100%;
       z-index: -1;
     }
+
+    &.swapping {
+      animation: swapping-right var(--animation-time);
+    }
   }
 
   .top {
     z-index: 5;
+  }
+}
+
+@keyframes swapping-left {
+  0% {
+    --tx: -60%;
+  }
+
+  50% {
+    --tx: -110%;
+  }
+
+  100% {
+    --tx: -60%;
+  }
+}
+
+@keyframes swapping-right {
+  0% {
+    --tx: -40%;
+  }
+
+  50% {
+    --tx: 10%;
+  }
+
+  100% {
+    --tx: -40%;
   }
 }

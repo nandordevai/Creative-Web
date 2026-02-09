@@ -9,6 +9,9 @@ export class Manual {
       page.addEventListener('click', (event) => {
         this.handleClick(event);
       });
+      page.addEventListener('animationend', () => {
+        this.endSwitch();
+      });
     });
     observe(document.body, () => {
       this.handleResize();
@@ -24,7 +27,7 @@ export class Manual {
   }
 
   moveUp() {
-      this.parent.style.setProperty('--ty', `translateY(calc(4vh - ${this.top}px))`);
+      this.parent.style.setProperty('--ty', `calc(4vh - ${this.top}px)`);
   }
 
   calculateTop() {
@@ -47,6 +50,15 @@ export class Manual {
   switch() {
     this.pages.forEach((page) => {
       page.classList.toggle('top');
+      page.classList.add('swapping');
+      page.style.setProperty('animation-play-state', 'running');
+    });
+  }
+
+  endSwitch() {
+    this.pages.forEach((page) => {
+      page.classList.remove('swapping');
+      page.style.setProperty('animation-play-state', 'paused');
     });
   }
 
@@ -62,7 +74,7 @@ export class Manual {
     this.pages.forEach((page) => {
       page.classList.remove('open');
     });
-    this.parent.style.setProperty('--ty', 'translateY(0)');
+    this.parent.style.setProperty('--ty', '0');
     this.isOpen = false;
   }
 }
