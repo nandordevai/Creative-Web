@@ -30,9 +30,9 @@
     --margin: 2rem;
     --padding: 3rem;
     --p-i: 3rem;
-    --p-top: 5rem;
+    --p-top: 5vh;
     --rows: auto 1fr;
-    --row-gap: 5rem;
+    --row-gap: 5vh;
     --width: fit-content;
   }
 }

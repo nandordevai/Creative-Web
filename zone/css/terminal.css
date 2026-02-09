@@ -31,6 +31,7 @@
     --width: 60vw;
 
     align-self: center;
+    max-height: 75vh;
   }
 
   aspect-ratio: 4 / 3;
