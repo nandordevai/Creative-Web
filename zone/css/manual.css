@@ -1,0 +1,124 @@
+#manual {
+  display: grid;
+  grid-area: manual;
+  grid-template-areas: "pages";
+  justify-self: center;
+  isolation: isolate;
+  position: relative;
+  z-index: 10;
+
+  --left: 0;
+  --top: 0;
+  --ty: translateY(0);
+
+  --paper-color: oklch(0.8 0 0);
+
+  * {
+    font-size: 0.75rem;
+    font-weight: 400;
+  }
+
+  p,
+  h2,
+  h3,
+  li {
+    margin-block-end: 1rem;
+  }
+
+  p,
+  li {
+    line-height: 1.25;
+  }
+
+  h3 {
+    text-transform: uppercase;
+  }
+
+  ul {
+    list-style-type: '- ';
+    list-style-position: inside;
+  }
+
+  footer p {
+    display: grid;
+    line-height: 1.5;
+  }
+
+  img {
+    position: relative;
+    top: 1rem;
+  }
+
+  .page {
+    box-shadow: 0 0 1rem oklch(0.1 0 0 / 0.5);
+    color: black;
+    cursor: pointer;
+    font-family: 'Special Elite', 'Courier', monospace;
+    grid-area: pages;
+    height: 48rem;
+    padding: 4rem;
+    position: absolute;
+    transform: var(--tx) var(--ty) var(--tr);
+    transition: all 0.3s cubic-bezier(.67, .31, .15, .96);
+    width: 37rem;
+  }
+
+  .page-1 {
+    --tx: translateX(-60%);
+    --ty-hover: translateY(-3%);
+    --tr: rotateZ(-1deg);
+    --tr-hover: rotateZ(-1.5deg);
+    background:
+      url(../img/stain-1.png) no-repeat bottom left,
+      url(../img/stain-2.png) no-repeat 170% -25%,
+      var(--paper-color);
+    background-size: 33%, 60%;
+    z-index: 2;
+
+    &:hover:not(.open) {
+      transform: var(--tx) var(--ty-hover) var(--tr-hover);
+    }
+
+    &::before {
+      background: url(../img/paper.jpeg) no-repeat center center fixed;
+      background-size: cover;
+      content: '';
+      height: 100%;
+      left: 0;
+      opacity: 0.5;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      z-index: -1;
+    }
+  }
+
+  .page-2 {
+    --tx: translateX(-40%);
+    --tr: rotateZ(2deg);
+
+    background:
+      url(../img/stain-3.png) no-repeat 180% 180%,
+      var(--paper-color);
+    background-size: 80%;
+    z-index: 1;
+
+    &::before {
+      background: url(../img/paper.jpeg) no-repeat center center fixed;
+      background-size: cover;
+      content: '';
+      height: 100%;
+      left: 0;
+      opacity: 0.5;
+      position: absolute;
+      top: 0;
+      transform: rotateZ(180deg);
+      width: 100%;
+      z-index: -1;
+    }
+  }
+
+  .top {
+    z-index: 5;
+  }
+}

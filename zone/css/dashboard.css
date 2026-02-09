@@ -1,4 +1,7 @@
 .dashboard {
+  grid-area: dashboard;
+  justify-self: start;
+
   --align: center;
   --areas:
     "leds switcher"
@@ -14,13 +17,12 @@
       "switcher"
       "audio";
     --columns: 1fr;
-    --gap: 2rem;
+    --gap: 0.5rem;
     --content-width: auto;
     --width: 10rem;
   }
 
   align-items: var(--align);
-  margin: 0 auto;
   padding: 2rem 1rem;
   position: relative;
   width: var(--width);
@@ -42,6 +44,7 @@
 
 #audio {
   grid-area: audio;
+  justify-content: flex-end;
 }
 
 #dashboard-plate {

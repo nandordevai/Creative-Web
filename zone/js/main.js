@@ -1,13 +1,14 @@
 import { Renderer } from './Renderer.js';
 import { NoiseOverlay } from './NoiseOverlay.js';
 import { AnimationState } from './AnimationState.js';
-import { Glitch } from './glitch.js';
+import { Glitch } from './Glitch.js';
 import { Leds } from './Leds.js';
 import { Plate } from './Plate.js';
 import { Switcher } from './Switcher.js';
 import { Terminal } from './Terminal.js';
 import { Audio } from './Audio.js';
 import { Button } from './Button.js';
+import { Manual } from './Manual.js';
 
 const state = new AnimationState();
 const glitch = new Glitch(state);
@@ -17,6 +18,7 @@ const leds = new Leds(state, 'led-row');
 const plate = new Plate('dashboard-plate');
 const audio = new Audio(state, 'audio');
 const switcher = new Switcher(state, 'switcher');
+const manual = new Manual('manual');
 const terminal = new Terminal(state, 'terminal');
 terminal.runBootSequence();
 document.querySelectorAll('.button').forEach((el) => {
