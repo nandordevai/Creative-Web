@@ -9,6 +9,7 @@
 
   --left: 0;
   --top: 0;
+  --ty: translateY(0);
 
   --paper-color: oklch(0.8 0 0);
 
@@ -57,15 +58,14 @@
     height: 48rem;
     padding: 4rem;
     position: absolute;
+    transform: var(--tx) var(--ty) var(--tr);
     transition: all 0.3s cubic-bezier(.67, .31, .15, .96);
     width: 37rem;
   }
 
   .page-1 {
     --tx: translateX(-60%);
-    --ty-closed: translateY(0%);
     --ty-hover: translateY(-3%);
-    --ty-open: translateY(-65%);
     --tr: rotateZ(-1deg);
     --tr-hover: rotateZ(-1.5deg);
     background:
@@ -73,7 +73,6 @@
       url(../img/stain-2.png) no-repeat 170% -25%,
       var(--paper-color);
     background-size: 33%, 60%;
-    transform: var(--tx) var(--ty-closed) var(--tr);
     z-index: 2;
 
     &:hover:not(.open) {
@@ -92,23 +91,16 @@
       width: 100%;
       z-index: -1;
     }
-
-    &.open {
-      transform: var(--tx) var(--ty-open) var(--tr);
-    }
   }
 
   .page-2 {
     --tx: translateX(-40%);
-    --ty-closed: translateY(0%);
-    --ty-open: translateY(-65%);
     --tr: rotateZ(2deg);
 
     background:
       url(../img/stain-3.png) no-repeat 180% 180%,
       var(--paper-color);
     background-size: 80%;
-    transform: var(--tx) var(--tr);
     z-index: 1;
 
     &::before {
@@ -123,10 +115,6 @@
       transform: rotateZ(180deg);
       width: 100%;
       z-index: -1;
-    }
-
-    &.open {
-      transform: var(--tx) var(--ty-open) var(--tr);
     }
   }
 
