@@ -13,15 +13,30 @@
   position: relative;
   z-index: 10;
 
+  --default-ty: 1rem;
   --left: 0;
   --top: 0;
-  --ty: 0;
+  --ty: 1rem;
 
   --animation-time: 0.5s;
+  --font-size: 0.6rem;
+  --height: 37rem;
+  --line-height: 1;
+  --padding: 2rem;
   --paper-color: oklch(0.8 0 0);
+  --width: 100vw;
+
+  @media (min-width: 600px) {
+    --font-size: 0.75rem;
+    --height: 48rem;
+    --line-height: 1.25;
+    --manual-top: 4vh;
+    --padding: 4rem;
+    --width: 37rem;
+  }
 
   * {
-    font-size: 0.75rem;
+    font-size: var(--font-size);
     font-weight: 400;
   }
 
@@ -34,7 +49,7 @@
 
   p,
   li {
-    line-height: 1.25;
+    line-height: var(--line-height);
   }
 
   h3 {
@@ -62,19 +77,26 @@
     cursor: pointer;
     font-family: 'Special Elite', 'Courier', monospace;
     grid-area: pages;
-    height: 48rem;
-    padding: 4rem;
+    height: var(--height);
+    padding: var(--padding);
     position: absolute;
     transform: translateX(var(--tx)) translateY(var(--ty)) rotateZ(var(--tr));
     transition: all 0.3s cubic-bezier(.67, .31, .15, .96);
-    width: 37rem;
+    width: var(--width);
   }
 
   .page-1 {
-    --tx: -60%;
+    --manual-top: -1vh;
+    --tx: -52%;
     --ty-hover: -3%;
     --tr: -1deg;
     --tr-hover: -1.5deg;
+
+    @media (min-width: 600px) {
+      --manual-top: 4vh;
+      --tx: -60%;
+    }
+
     background:
       url(../img/stain-1.png) no-repeat bottom left,
       url(../img/stain-2.png) no-repeat 170% -25%,
@@ -105,8 +127,14 @@
   }
 
   .page-2 {
-    --tx: -40%;
+    --manual-top: 17vh;
     --tr: 2deg;
+    --tx: -45%;
+
+    @media (min-width: 600px) {
+      --manual-top: 5vh;
+      --tx: -40%;
+    }
 
     background:
       url(../img/stain-3.png) no-repeat 180% 180%,

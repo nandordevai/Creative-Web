@@ -3,9 +3,10 @@ import { observe } from './resizer.js'
 export class Plate {
   constructor(id) {
     this.canvas = document.getElementById(id);
+    this.isMobile = this.canvas.width > this.canvas.height;
     this.ctx = this.canvas.getContext('2d');
     this.needsUpdate = true;
-    this.screwSize = 7;
+    this.screwSize = this.isMobile ? 5 : 7;
     this.dpr = devicePixelRatio ?? 1;
 
     const parent = this.canvas.parentNode;
@@ -224,9 +225,10 @@ export class Plate {
     this.ctx.strokeStyle = 'rgba(0, 0, 0, 0.6)';
     this.ctx.lineWidth = 2;
 
+    const l = this.isMobile ? 1 : 3;
     this.ctx.beginPath();
-    this.ctx.moveTo(-this.screwSize + 3, 0);
-    this.ctx.lineTo(this.screwSize - 3, 0);
+    this.ctx.moveTo(-this.screwSize + l, 0);
+    this.ctx.lineTo(this.screwSize - l, 0);
     this.ctx.stroke();
     this.ctx.restore();
   }

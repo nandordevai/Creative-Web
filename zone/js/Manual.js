@@ -26,8 +26,8 @@ export class Manual {
     }
   }
 
-  moveUp() {
-      this.parent.style.setProperty('--ty', `calc(4vh - ${this.top}px)`);
+  moveUp(page) {
+    page.style.setProperty('--ty', `calc(var(--manual-top) - ${this.top}px)`);
   }
 
   calculateTop() {
@@ -65,16 +65,18 @@ export class Manual {
   open() {
     this.pages.forEach((page) => {
       page.classList.add('open');
+      this.moveUp(page);
     });
-    this.moveUp();
     this.isOpen = true;
   }
 
   close() {
     this.pages.forEach((page) => {
       page.classList.remove('open');
+      page.classList.remove('swapping');
+      page.style.setProperty('animation-play-state', 'paused');
+      page.style.setProperty('--ty', 'var(--default-ty)');
     });
-    this.parent.style.setProperty('--ty', '0');
     this.isOpen = false;
   }
 }

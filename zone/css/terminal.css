@@ -1,5 +1,5 @@
 .terminal {
-  align-self: center;
+  align-self: end;
   grid-area: terminal;
   justify-self: end;
 
@@ -23,12 +23,14 @@
   --bezel-border: 0.5rem;
   --bezel-width: clamp(1rem, 4vw, 3rem);
   --content-padding: 1rem;
-  --width: auto;
+  --width: calc(100vw - 2 * var(--p-i));
 
   @media (min-width: 600px) {
     --bezel-border: 1rem;
     --content-padding: 1rem;
     --width: 60vw;
+
+    align-self: center;
   }
 
   aspect-ratio: 4 / 3;
@@ -100,7 +102,7 @@
     height: calc(100% - var(--bezel-width) * 2);
     left: var(--bezel-width);
     mix-blend-mode: screen;
-    overflow: scroll;
+    overflow: hidden;
     position: absolute;
     padding: var(--content-padding);
     top: var(--bezel-width);
@@ -146,7 +148,7 @@
   .text {
     color: var(--text-color);
     font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(0.5rem, 1.5vw, 1rem);
+    font-size: clamp(0.6rem, 1.5vw, 1rem);
     text-shadow:
       -0.5px 0 #ff0000,
       0.5px 0 #00ffff,
