@@ -1,40 +1,41 @@
 const PROMPT = '>> ';
 const BOOTLOG = [
   'INITIALIZING INTERFACE...',
-  'VOLTAGE: 210V (UNSTABLE)',
+  'VOLTAGE: 218V (UNSTABLE)',
   'LOCATION: SECTOR_G-901∆',
-  'LOADING SECTOR_MAP... [SUCCESS]',
+  'LOADING SECTOR_MAP...',
+  '[SUCCESS]',
   'SIGNAL_DECAY: 42%',
-  '// LOG_017 [RECOVERY_MODE]',
   'CALIBRATING RADIATION METER...',
   'AUDIO_BUFFER_LOADED: ZONE_VOICE',
   'MONITORING ZONE ARTIFACTS',
   '[!] SENSORS DETECT MOVEMENT IN TURBINE HALL',
+  'PARSING LOGS...',
+  '[DONE]',
   'WELCOME, OPERATOR. STAY NEAR THE LIGHT.',
 ];
 const LOGS = [
   [
-    'CAMERA 01: THE EXTERIOR',
-    'STATUS: OBSERVATION DECK.',
-    'THE SKY HAS BEEN THIS SHADE OF GREY FOR DECADES.',
-    'THE DIALS STOPPED MOVING IN ’86, BUT THE SHADOWS BEHIND THE GLASS STILL SEEM TO SHIFT.',
-    'NATURE IS RECLAIMING THE CONCRETE, BUT NOTHING HERE FEELS GREEN.',
+    'CAMERA 01: EXTERIOR',
+    'STATUS: SECTOR NOMINAL. NO ANOMALIES. ',
+    'LOOKING UP FROM HERE, THE SKY IS ALWAYS GREY. IT HAS BEEN THIS SHADE FOR DECADES.',
+    'THE DIALS ON THE CONTROL PANEL STOPPED MOVING IN ’86, BUT THE SHADOWS BEHIND THE GLASS STILL SEEM TO SHIFT.',
+    'NATURE IS AGGRESSIVELY RECLAIMING THE CONCRETE, BUT THE PLANTS HAVE A STRANGE GREEN COLOR.',
   ],
   [
-    'CAMERA 02: THE TURBINE HALL',
-    'STATUS: SECTOR 4-B.',
-    'THESE IRON GIANTS WERE BUILT TO POWER A CITY; NOW THEY BARELY HOLD UP THE CEILING.',
-    'THERE IS A VIBRATION IN THE AIR THAT THE SENSORS CAN’T CATEGORIZE.',
-    'IT FEELS LIKE THE HALL IS HOLDING ITS BREATH.',
-    'THE FOG DOESN’T SHOW UP ON THE SCREEN.',
-  ],
-  [
-    'CAMERA 03: THE PROCESS HALL',
-    'STATUS: SECONDARY FLOW.',
+    'CAMERA 02: TURBINE HALL',
+    'STATUS: MARGINAL. LEVEL 2 VISUAL DISTORTION ACTIVE. ',
     'A LABYRINTH OF RUSTED IRON AND DEAD PRESSURE GAUGES.',
-    'IF YOU LISTEN CLOSELY TO THE DRONE, YOU CAN HEAR THE GHOSTS OF THE STEAM STILL TRYING TO FIND A WAY OUT.',
-    '[DATA CORRUPTED] - RADIO FRAGMENTS DETECTED. SOUNDS LIKE A PRAYER, OR A WARNING.',
-    'EXTERNAL SENSORS REPORTING HEAVY INTERFERENCE.',
+    'SENSORS PICK UP A LOW-FREQUENCY VIBRATION THAT DEFIES CATEGORIZATION. IT IS NOT MECHANICAL, BUT RHYTHMIC. LIKE RESPIRATION.',
+    'THE FOG DOES NOT SHOW UP ON THE SCREEN.',
+  ],
+  [
+    'CAMERA 03: CORE',
+    'STATUS: CRITICAL. LEVEL 3 COGNITIVE HAZARD. ',
+    'HEAVY CONCRETE AND A TANGLE OF DEAD PIPES. THESE STRUCTURES WERE DESIGNED TO CONTAIN POWER; NOW THEY ARE JUST HOLLOW RIBS HOLDING UP THE CEILING.',
+    'A HIGH-FREQUENCY HISS IS BLEEDING THROUGH THE PIPES, A PHYSICAL RESONANCE THAT SHOULD NOT EXIST IN A DRY SYSTEM.',
+    'RADIO FRAGMENTS DETECTED. SOUNDS LIKE A PRAYER, OR A WARNING.',
+    'SIGNAL BLEED IS INTENSE. THE CORE IS NOT COLD. IT IS MERELY ',
   ],
 ];
 
@@ -65,7 +66,9 @@ export class Terminal {
     }
 
     let first = continuation;
-    for (const line of lines) {
+    let i = 0;
+    while (i < lines.length) {
+      const line = lines[i];
       const lineEl = document.createElement('div');
       lineEl.classList.add('glitch', 'text');
       if (first) {
@@ -74,16 +77,34 @@ export class Terminal {
       }
       this.textEl.appendChild(lineEl);
       lineEl.appendChild(this.cursor);
-      lineEl.scrollIntoView(false);
       this.cursor.before(PROMPT);
       for (let i = 0; i < line.length; i++) {
         this.cursor.before(line[i]);
+        lineEl.scrollIntoView(false);
         await delay(this.charDelay);
+      }
+      if (Math.random() > 0.95) {
+        this.textEl.removeChild(lineEl);
+      } else {
+        i++;
       }
       await delay(Math.random() * 300 + 100);
     }
+    if (lines[0] === LOGS[2][0]) {
+      this.cursor.before(this.garbleText());
+    }
     this.addCursorLine();
     this.isWriting = false;
+  }
+
+  garbleText(intensity = 0.8) {
+    const corruptionChars = '█▓▒░$@&%#!?/><^¿§∆01';
+    return 'WAITING FOR THE RETURN'.split('').map(char => {
+      if (char !== ' ' && Math.random() < intensity) {
+        return corruptionChars[Math.floor(Math.random() * corruptionChars.length)];
+      }
+      return char;
+    }).join('');
   }
 
   addCursorLine() {

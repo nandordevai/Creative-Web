@@ -86,7 +86,7 @@ export class Plate {
 
     // text label
     this.drawStampedText({
-      text: 'REF: 909-X',
+      text: 'K-5247',
       x: this.w / 2,
       y: this.h - 10,
       size: 10,

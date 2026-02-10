@@ -43,3 +43,12 @@ renderer.register(plate);
 renderer.register(terminal);
 
 renderer.start();
+
+console.log("%c☢️ ANOMALOUS ACCESS DETECTED", "color: red; font-weight: bold;");
+console.log(
+    "%c SIGNAL RECOVERY SUCCESSFUL %c ACCESS GRANTED: STALKER ",
+    "background: #33ff33; color: #000; font-weight: bold; padding: 2px 5px;",
+    "background: #000; color: #33ff33; font-weight: bold; padding: 2px 5px; border: 1px solid #33ff33;"
+);
+
+console.log('WARNING: Sector 3 Null-Point data is classified. Unauthorized debugging may lead to cognitive staining.');

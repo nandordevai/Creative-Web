@@ -28,7 +28,6 @@ export class Glitch {
   triggerRandomGlitch() {
     this.state.update('isGlitching', true);
 
-    // move out
     this.glitchElements.forEach(el => el.classList.add('heavy-glitch'));
 
     setTimeout(() => {

@@ -103,12 +103,17 @@
     height: calc(100% - var(--bezel-width) * 2);
     left: var(--bezel-width);
     mix-blend-mode: screen;
-    overflow: hidden;
+    overflow: scroll;
     position: absolute;
     padding: var(--content-padding);
+    scrollbar-width: 0;
     top: var(--bezel-width);
     width: calc(100% - var(--bezel-width) * 2);
     z-index: var(--content);
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   .cursor {
