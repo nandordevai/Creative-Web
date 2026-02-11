@@ -75,26 +75,26 @@ main {
   grid-template-areas: var(--areas);
   grid-template-columns: var(--columns);
   grid-template-rows: var(--rows);
-  height: 100vh;
+  height: 100dvh;
   justify-items: start;
   margin: 0 auto;
   overflow: hidden;
   padding-block-start: var(--p-top);
   padding-inline: var(--p-i);
   row-gap: var(--row-gap);
-  width: 100vw;
+  width: 100dvw;
 }
 
 .mobile-overlay {
   align-content: center;
   background: oklch(0.15 0 0 / 0.5);
   display: grid;
-  height: 100vh;
+  height: 100dvh;
   inset: 0;
   padding: 1rem;
   position: absolute;
   text-align: center;
-  width: 100vw;
+  width: 100dvw;
   z-index: 20;
 
   .overlay-content {

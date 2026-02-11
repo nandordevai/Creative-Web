@@ -54,7 +54,10 @@ console.log(
 
 console.log('WARNING: Sector 3 Null-Point data is classified. Unauthorized debugging may lead to cognitive staining.');
 
-if (localStorage.getItem('overlayHidden') !== 'true') {
+if (
+  localStorage.getItem('overlayHidden') !== 'true' &&
+  Math.min(window.innerWidth, window.innerHeight) <= 600
+) {
   document.getElementById('mobile-overlay').classList.remove('hidden');
 }
 

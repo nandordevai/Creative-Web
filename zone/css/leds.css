@@ -8,7 +8,7 @@
     --size: 0.75rem;
     --level: .1;
     border: 3px transparent;
-    border-radius: 100vw;
+    border-radius: 100dvw;
     height: var(--size);
     transition: all 0.2s;
     width: var(--size);

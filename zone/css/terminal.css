@@ -22,7 +22,7 @@
   --bezel-border: 0.5rem;
   --bezel-width: clamp(1rem, 4vw, 3rem);
   --content-padding: 1rem;
-  --width: calc(100vw - 2 * var(--p-i));
+  --width: calc(100dvw - 2 * var(--p-i));
 
   @media (min-width: 600px) {
     --bezel-border: 1rem;
