@@ -83,6 +83,7 @@
     transform: translateX(var(--tx)) translateY(var(--ty)) rotateZ(var(--tr));
     transition: all 0.3s cubic-bezier(.67, .31, .15, .96);
     width: var(--width);
+    will-change: transform;
   }
 
   .page-1 {
