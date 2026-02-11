@@ -24,6 +24,7 @@ export class Radio extends AudioModule {
     this.buffers = this.shuffle(this.buffers);
   }
 
+  // Fisher-Yates algorithm
   shuffle(items) {
     const shuffled = [...items];
     for (let i = shuffled.length - 1; i > 0; i--) {

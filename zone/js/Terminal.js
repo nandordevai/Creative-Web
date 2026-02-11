@@ -138,7 +138,7 @@ export class Terminal {
         1
       );
     }, 200);
-    if (state.terminalStream === '3') {
+    if (state.terminalStream === '3' && Math.random() > 0.8) {
       this.el.querySelector('.bg').style.setProperty(
         'animation', 'background-zoom 120s linear 1'
       );

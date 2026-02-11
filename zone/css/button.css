@@ -149,3 +149,11 @@
     }
   }
 }
+
+.button-enter {
+  width: fit-content;
+
+  .label {
+    padding-inline: 1.5rem;
+  }
+}

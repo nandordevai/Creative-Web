@@ -59,9 +59,9 @@ export class Plate {
 
     // base metal
     const metalGrad = this.ctx.createLinearGradient(0, 0, this.w, this.h);
-    metalGrad.addColorStop(0, '#000');
-    metalGrad.addColorStop(0.5, '#010101');
-    metalGrad.addColorStop(1, '#020202');
+    metalGrad.addColorStop(0, 'rgba(0, 0, 0, 1)');
+    metalGrad.addColorStop(0.5, 'rgba(1, 1, 1, 1)');
+    metalGrad.addColorStop(1, 'rgba(2, 2, 2, 1)');
     this.ctx.fillStyle = metalGrad;
     this.ctx.fillRect(0, 0, this.w, this.h);
 
@@ -215,8 +215,8 @@ export class Plate {
     this.ctx.rotate(Math.random() * Math.PI);
 
     const g = this.ctx.createRadialGradient(-2, -2, 1, 0, 0, this.screwSize);
-    g.addColorStop(0, '#777');
-    g.addColorStop(1, '#111');
+    g.addColorStop(0, 'rgba(120, 120, 120, 1)');
+    g.addColorStop(1, 'rgba(15, 15, 15, 1)');
     this.ctx.fillStyle = g;
 
     this.ctx.beginPath();

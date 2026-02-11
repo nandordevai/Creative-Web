@@ -7,7 +7,6 @@ import { Plate } from './Plate.js';
 import { Switcher } from './Switcher.js';
 import { Terminal } from './Terminal.js';
 import { Audio } from './Audio.js';
-import { Button } from './Button.js';
 import { Manual } from './Manual.js';
 
 const state = new AnimationState();
@@ -22,19 +21,21 @@ const manual = new Manual('manual');
 const terminal = new Terminal(state, 'terminal');
 terminal.runBootSequence();
 document.querySelectorAll('.button').forEach((el) => {
-  const button = new Button(el);
-  button.addEventListener('buttonpress', () => {
+  el.addEventListener('pointerdown', () => {
     audio.click('on');
   });
-  button.addEventListener('buttonrelease', () => {
+  el.addEventListener('pointerup', () => {
     audio.click('off');
   });
   if (el.classList.contains('clrscr')) {
-    button.addEventListener('buttonpress', () => {
+    el.addEventListener('pointerdown', () => {
       terminal.clrscr();
     });
   }
-})
+  if (el.id === 'enter-button') {
+    el.addEventListener('pointerup', hideMobileOverlay);
+  }
+});
 
 renderer.register(noiseOverlay);
 renderer.register(glitch);
@@ -52,3 +53,12 @@ console.log(
 );
 
 console.log('WARNING: Sector 3 Null-Point data is classified. Unauthorized debugging may lead to cognitive staining.');
+
+if (localStorage.getItem('overlayHidden') !== 'true') {
+  document.getElementById('mobile-overlay').classList.remove('hidden');
+}
+
+function hideMobileOverlay() {
+  document.getElementById('mobile-overlay').classList.add('hidden');
+  localStorage.setItem('overlayHidden', 'true');
+}
