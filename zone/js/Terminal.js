@@ -92,6 +92,8 @@ export class Terminal {
     }
     if (lines[0] === LOGS[2][0]) {
       this.cursor.before(this.garbleText());
+      this.addCursorLine();
+      this.cursor.before('ERR_CODE: 5H32-W');
     }
     this.addCursorLine();
     this.isWriting = false;
