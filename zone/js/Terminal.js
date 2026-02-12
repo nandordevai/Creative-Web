@@ -1,15 +1,13 @@
 const PROMPT = '>> ';
 const BOOTLOG = [
   'INITIALIZING INTERFACE...',
-  'VOLTAGE: 218V (UNSTABLE)',
-  'LOCATION: SECTOR_G-901∆',
+  'LOCATION: SECTOR 5H32-W',
   'LOADING SECTOR_MAP...',
-  '[SUCCESS]',
-  'SIGNAL_DECAY: 42%',
+  '[LOADED]',
+  'SIGNAL_DECAY: 16.1%',
   'CALIBRATING RADIATION METER...',
   'AUDIO_BUFFER_LOADED: ZONE_VOICE',
   'MONITORING ZONE ARTIFACTS',
-  '[!] SENSORS DETECT MOVEMENT IN TURBINE HALL',
   'PARSING LOGS...',
   '[DONE]',
   'WELCOME, OPERATOR. STAY NEAR THE LIGHT.',
@@ -54,10 +52,10 @@ export class Terminal {
   }
 
   runBootSequence() {
-    this.displayLog(BOOTLOG, false);
+    this.displayLog(BOOTLOG, false, true);
   }
 
-  async displayLog(lines, continuation = true) {
+  async displayLog(lines, continuation = true, booting = false) {
     this.isWriting = true;
     const delay = (ms) => new Promise(res => setTimeout(res, ms));
 
@@ -83,7 +81,7 @@ export class Terminal {
         lineEl.scrollIntoView(false);
         await delay(this.charDelay);
       }
-      if (Math.random() > 0.95) {
+      if (Math.random() > 0.95 && !booting) {
         this.textEl.removeChild(lineEl);
       } else {
         i++;
@@ -93,7 +91,7 @@ export class Terminal {
     if (lines[0] === LOGS[2][0]) {
       this.cursor.before(this.garbleText());
       this.addCursorLine();
-      this.cursor.before('ERR_CODE: 5H32-W');
+      this.cursor.before('ERR_CODE: MG-01.23.45');
     }
     this.addCursorLine();
     this.isWriting = false;
